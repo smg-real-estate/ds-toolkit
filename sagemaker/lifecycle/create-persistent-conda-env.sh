@@ -42,7 +42,7 @@ done
 cd ${EC2_HOME}/SageMaker
 
 py37_projects=("ml-homegate-projects")
-conda activate "${KERNEL_NAME}-py37"
+conda activate "${KERNEL_NAME}-py3.7"
 
 for project in ${py37_projects[@]}; do
   pushd $project
@@ -53,7 +53,7 @@ for project in ${py37_projects[@]}; do
 done
 
 py39_projects=("managed-airflow" "data-platform")
-conda activate "${KERNEL_NAME}-py39"
+conda activate "${KERNEL_NAME}-py3.9"
 
 for project in ${py39_projects[@]}; do
   pushd $project
