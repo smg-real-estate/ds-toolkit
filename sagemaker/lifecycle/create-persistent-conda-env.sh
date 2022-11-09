@@ -34,7 +34,7 @@ PYTHON_VERSIONS=("3.7" "3.8" "3.9")
 for python_version in ${PYTHON_VERSIONS[@]}; do
     conda create -y -n "${KERNEL_NAME}-py${python_version}" python=${python_version} \
       ipykernel watchtower urllib3[secure] requests pre-commit nbdime
-    conda activate "${KERNEL_NAME}-py\${python_version}"
+    conda activate "${KERNEL_NAME}-py${python_version}"
     python -m ipykernel install --user --name "${KERNEL_NAME}-py${python_version}" \
       --display-name "Python (${python_version}) (${KERNEL_NAME})"
 done
