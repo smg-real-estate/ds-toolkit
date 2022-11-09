@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euxo pipefail
 # OVERVIEW
 # This script installs a custom, persistent installation of conda on the Notebook Instance's EBS volume, and ensures
 # that these custom environments are available as kernels in Jupyter.
@@ -12,9 +12,10 @@ set -e
 
 # For another example, see:
 # https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-add-external.html#nbi-isolated-environment
+WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda/
+PATH=$WORKING_DIR/miniconda/bin:$PATH
 sudo -u ec2-user -i <<'EOF'
 unset SUDO_UID
-WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda/
 source "$WORKING_DIR/miniconda/bin/activate"
 
 for env in $WORKING_DIR/miniconda/envs/*; do
@@ -22,7 +23,7 @@ for env in $WORKING_DIR/miniconda/envs/*; do
 BASENAME=$(basename "$env")
 source activate "$BASENAME"
 
-python -m ipykernel install --user --name "$BASENAME" --display-name "Custom ($BASENAME)"
+python -m ipykernel install --user --name "$BASENAME" --display-name "Python (${BASENAME})"
 done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
@@ -48,8 +49,8 @@ systemctl restart jupyter-server
 
 EC2_HOME=/home/ec2-user
 IDLE_TIME=7200
-CONDA_ENV_NAME=ds-smg-real-estate-py37
-CONDA_ENV_PATH=${EC2_HOME}/anaconda3/envs/${CONDA_ENV_NAME}
+CONDA_ENV_NAME=smg-re-py3.7
+CONDA_ENV_PATH=${WORKING_DIR}/miniconda/envs/${CONDA_ENV_NAME}
 echo "Fetching the autostop script"
 wget https://raw.githubusercontent.com/smg-real-estate/ds-toolkit/main/sagemaker/lifecycle/autostop.py \
   -O ${EC2_HOME}/autostop.py
