@@ -50,7 +50,7 @@ BASENAME=$(basename "$env")
 source activate "$BASENAME"
 
 python -m ipykernel install --user --name "$BASENAME" \
-  --display-name "Python (${BASENAME})" --sys-prefix --env PATH "${PATH}"
+  --display-name "Python (${BASENAME})" --env PATH \"${PATH}\"
 done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
