@@ -28,6 +28,9 @@ PATH=$WORKING_DIR/miniconda/bin:$PATH
 
 # Create a custom conda environment
 source "$WORKING_DIR/miniconda/bin/activate"
+
+conda install mamba -n base -c conda-forge
+
 KERNEL_NAME="smg-re"
 PYTHON_VERSIONS=("3.7" "3.8" "3.9")
 
