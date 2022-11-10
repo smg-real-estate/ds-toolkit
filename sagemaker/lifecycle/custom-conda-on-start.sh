@@ -12,19 +12,17 @@ set -euxo pipefail
 
 # For another example, see:
 # https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-add-external.html#nbi-isolated-environment
-WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
-PATH=$WORKING_DIR/miniconda/bin:$PATH
-GIT_USER=$GIT_USER
-GIT_EMAIL=$GIT_EMAIL
-sudo -u ec2-user -i <<'EOF'
+export WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
+export PATH=$WORKING_DIR/miniconda/bin:$PATH
+export GIT_USER=$GIT_USER
+export GIT_EMAIL=$GIT_EMAIL
+sudo -E -u ec2-user -i <<'EOF'
 unset SUDO_UID
 
 git config --global user.email "${GIT_EMAIL}"
 git config --global user.name "${GIT_USER}"
 git config --global pull.rebase true
 
-WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
-PATH=$WORKING_DIR/miniconda/bin:$PATH
 source "$WORKING_DIR/miniconda/bin/activate"
 
 for env in $WORKING_DIR/miniconda/envs/*; do
@@ -32,11 +30,13 @@ for env in $WORKING_DIR/miniconda/envs/*; do
 BASENAME=$(basename "$env")
 source activate "$BASENAME"
 
-python -m ipykernel install --user --name "$BASENAME" --display-name "Python (${BASENAME})"
+python -m ipykernel install --user --name "$BASENAME" --display-name "Python (${BASENAME})" --sys-prefix --env PATH "${PATH}"
 done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
 # echo "c.EnvironmentKernelSpecManager.use_conda_directly = False" >> /home/ec2-user/.jupyter/jupyter_notebook_config.py
+
+echo "c.NotebookApp.terminado_settings.shell_command = bash"
 
 # rm /home/ec2-user/.condarc
 EOF
@@ -54,7 +54,7 @@ systemctl restart jupyter-server
 #       and SageMaker:DescribeNotebookInstance to describe the notebook.
 
 EC2_HOME=/home/ec2-user
-echo "source $EC2_HOME/SageMaker/ds-tooolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.bashrc
+echo "source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.profile
 IDLE_TIME=7200
 CONDA_ENV_NAME=smg-re-py3.7
 CONDA_ENV_PATH=${WORKING_DIR}/miniconda/envs/${CONDA_ENV_NAME}
