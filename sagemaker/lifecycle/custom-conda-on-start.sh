@@ -12,10 +12,12 @@ set -euxo pipefail
 
 # For another example, see:
 # https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-add-external.html#nbi-isolated-environment
-WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda/
+WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
 PATH=$WORKING_DIR/miniconda/bin:$PATH
 sudo -u ec2-user -i <<'EOF'
 unset SUDO_UID
+WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
+PATH=$WORKING_DIR/miniconda/bin:$PATH
 source "$WORKING_DIR/miniconda/bin/activate"
 
 for env in $WORKING_DIR/miniconda/envs/*; do
@@ -32,11 +34,8 @@ done
 # rm /home/ec2-user/.condarc
 EOF
 echo "Restarting the Jupyter server.."
-# For notebook instance with alinux (notebook-al1-v1)
-initctl restart jupyter-server --no-wait
-# Use this instead for notebook instance with alinux2 (notebook-al2-v1)
 systemctl restart jupyter-server
-#
+
 # OVERVIEW
 # This part of the script stops a SageMaker notebook once it's idle for more than 1 hour (default time)
 # You can change the idle time for stop using the environment variable below.
