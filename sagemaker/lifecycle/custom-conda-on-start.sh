@@ -54,6 +54,7 @@ systemctl restart jupyter-server
 #       and SageMaker:DescribeNotebookInstance to describe the notebook.
 
 EC2_HOME=/home/ec2-user
+echo "source $EC2_HOME/SageMaker/ds-tooolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.bashrc
 IDLE_TIME=7200
 CONDA_ENV_NAME=smg-re-py3.7
 CONDA_ENV_PATH=${WORKING_DIR}/miniconda/envs/${CONDA_ENV_NAME}
