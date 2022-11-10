@@ -24,7 +24,7 @@ if [ ! -d "${WORKING_DIR}" ]; then
   rm -rf "$WORKING_DIR/miniconda.sh"
 fi
 
-PATH=$WORKING_DIR/miniconda/bin:$PATH
+export PATH=$WORKING_DIR/miniconda/bin:$PATH
 
 # Create a custom conda environment
 source "$WORKING_DIR/miniconda/bin/activate"
@@ -39,7 +39,7 @@ for python_version in ${PYTHON_VERSIONS[@]}; do
       ipykernel watchtower urllib3[secure] requests pre-commit nbdime
     conda activate "${KERNEL_NAME}-py${python_version}"
     python -m ipykernel install --user --name "${KERNEL_NAME}-py${python_version}" \
-      --display-name "Python (${python_version}) (${KERNEL_NAME})"
+      --display-name "Python (${python_version}) (${KERNEL_NAME})" --sys-prefix --env PATH "${PATH}
 done
 
 cd ${EC2_HOME}/SageMaker
