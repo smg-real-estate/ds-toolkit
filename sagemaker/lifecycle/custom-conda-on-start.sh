@@ -14,8 +14,15 @@ set -euxo pipefail
 # https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-add-external.html#nbi-isolated-environment
 WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
 PATH=$WORKING_DIR/miniconda/bin:$PATH
+GIT_USER=$GIT_USER
+GIT_EMAIL=$GIT_EMAIL
 sudo -u ec2-user -i <<'EOF'
 unset SUDO_UID
+
+git config --global user.email "${GIT_EMAIL}"
+git config --global user.name "${GIT_USER}"
+git config --global pull.rebase true
+
 WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
 PATH=$WORKING_DIR/miniconda/bin:$PATH
 source "$WORKING_DIR/miniconda/bin/activate"
