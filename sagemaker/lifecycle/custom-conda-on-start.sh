@@ -25,6 +25,7 @@ sudo -u ec2-user -E git config --global init.defaultbranch main
 sudo -n -u ec2-user -i <<'EOF'
 set -euxo pipefail
 unset SUDO_UID
+printenv
 
 CUSTOM_KERNELS_DIR=/home/ec2-user/SageMaker/.kernels
 
@@ -68,7 +69,7 @@ EC2_HOME=/home/ec2-user
 echo "source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.profile
 IDLE_TIME=7200
 CONDA_ENV_NAME=smg-re-py3.7
-CONDA_ENV_PATH=${WORKING_DIR}/miniconda/envs/${CONDA_ENV_NAME}
+CONDA_ENV_PATH=${EC2_HOME}/SageMaker/.kernels/${CONDA_ENV_NAME}
 echo "Fetching the autostop script"
 wget ${PROJECT_URL}/${BRANCH}/sagemaker/lifecycle/autostop.py \
   -O ${EC2_HOME}/autostop.py
