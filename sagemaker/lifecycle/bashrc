@@ -1,17 +1,1 @@
-conda init --reverse > /dev/null
-WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
-export PATH=$WORKING_DIR/miniconda/bin:$PATH
 cd $JUPYTER_SERVER_ROOT
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/ec2-user/SageMaker/custom-miniconda/miniconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$WORKING_DIR/miniconda/etc/profile.d/conda.sh" ]; then
-        . "$WORKING_DIR/miniconda/etc/profile.d/conda.sh"
-    else
-        export PATH="$WORKING_DIR/miniconda/bin:$PATH"
-    fi
-fi
-unset __conda_setup

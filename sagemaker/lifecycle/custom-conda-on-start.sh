@@ -21,36 +21,22 @@ sudo -u ec2-user -E git config --global alias.force-push push --force-with-lease
 sudo -u ec2-user -E git config --global alias.fp force-push
 sudo -u ec2-user -E git config --global init.defaultbranch main
 ################################################################################
-# OVERVIEW
-# This script installs a custom, persistent installation of conda on the Notebook Instance's EBS volume, and ensures
-# that these custom environments are available as kernels in Jupyter.
-# 
-# The on-start script uses the custom conda environment created in the on-create script and uses the ipykernel package
-
-# to add that as a kernel in Jupyter.
-
-#
-
-# For another example, see:
-# https://docs.aws.amazon.com/sagemaker/latest/dg/nbi-add-external.html#nbi-isolated-environment
-export WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
-export PATH=$WORKING_DIR/miniconda/bin:$PATH
 
 sudo -n -u ec2-user -i <<'EOF'
 set -euxo pipefail
 unset SUDO_UID
 
-WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
-PATH=$WORKING_DIR/miniconda/bin:$PATH
-source "$WORKING_DIR/miniconda/bin/activate"
+CUSTOM_KERNELS_DIR=/home/ec2-user/SageMaker/.kernels
 
-for env in $WORKING_DIR/miniconda/envs/*; do
+for env in $CUSTOM_KERNELS_DIR/*; do
 
-BASENAME=$(basename "$env")
-source activate "$BASENAME"
+  BASENAME=$(basename "$env")
+  ln -s $env ~/anaconda3/envs/$BASENAME
 
-python -m ipykernel install --user --name "$BASENAME" \
-  --display-name "Python (${BASENAME})" --env PATH \"${PATH}\"
+  source activate "$BASENAME"
+
+  python -m ipykernel install --user --name "$BASENAME" \
+    --display-name "Python (${BASENAME})"
 done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
@@ -73,13 +59,15 @@ systemctl restart jupyter-server
 #   2. Ensure the Notebook Instance execution role permissions to SageMaker:StopNotebookInstance to stop the notebook 
 #       and SageMaker:DescribeNotebookInstance to describe the notebook.
 
+PROJECT_URL=$PROJECT_URL
+BRANCH=$BRANCH
 EC2_HOME=/home/ec2-user
 echo "source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.profile
 IDLE_TIME=7200
 CONDA_ENV_NAME=smg-re-py3.7
 CONDA_ENV_PATH=${WORKING_DIR}/miniconda/envs/${CONDA_ENV_NAME}
 echo "Fetching the autostop script"
-wget https://raw.githubusercontent.com/smg-real-estate/ds-toolkit/main/sagemaker/lifecycle/autostop.py \
+wget ${PROJECT_URL}/${BRANCH}/sagemaker/lifecycle/autostop.py \
   -O ${EC2_HOME}/autostop.py
 
 echo "Starting the SageMaker autostop script in cron"
