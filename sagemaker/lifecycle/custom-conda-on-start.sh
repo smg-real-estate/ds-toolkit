@@ -43,7 +43,7 @@ done
 
 # echo "c.EnvironmentKernelSpecManager.use_conda_directly = False" >> /home/ec2-user/.jupyter/jupyter_notebook_config.py
 
-echo "c.NotebookApp.terminado_settings.shell_command = bash"
+echo "c.NotebookApp.terminado_settings.shell_command = bash" >> /home/ec2-user/.jupyter/jupyter_notebook_config.py
 
 # rm /home/ec2-user/.condarc
 #
