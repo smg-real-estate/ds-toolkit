@@ -47,8 +47,6 @@ echo "c.NotebookApp.terminado_settings.shell_command = bash" >> /home/ec2-user/.
 
 # rm /home/ec2-user/.condarc
 #
-# Install micromamba
-curl micro.mamba.pm/install.sh | bash
 EOF
 echo "Restarting the Jupyter server.."
 systemctl restart jupyter-server
