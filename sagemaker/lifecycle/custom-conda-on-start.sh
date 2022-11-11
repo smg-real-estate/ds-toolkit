@@ -40,16 +40,16 @@ ln -sf $CONFIGS_DIR/nbconfig
 
 popd
 
-for env in $CUSTOM_KERNELS_DIR/*; do
-
-  BASENAME=$(basename "$env")
-  ln -s $env ~/anaconda3/envs/$BASENAME
-
-  source activate "$BASENAME"
-
-  python -m ipykernel install --user --name "$BASENAME" \
-    --display-name "Python (${BASENAME})"
-done
+# for env in $CUSTOM_KERNELS_DIR/*; do
+#
+#  BASENAME=$(basename "$env")
+#  ln -s $env ~/anaconda3/envs/$BASENAME
+#
+#  source activate "$BASENAME"
+#
+#  python -m ipykernel install --user --name "$BASENAME" \
+#    --display-name "Python (${BASENAME})"
+# done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
 # echo "c.EnvironmentKernelSpecManager.use_conda_directly = False" >> $HOME/.jupyter/jupyter_notebook_config.py
