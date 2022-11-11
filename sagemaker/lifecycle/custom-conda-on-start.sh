@@ -30,6 +30,15 @@ printenv
 HOME=/home/ec2-user
 
 CUSTOM_KERNELS_DIR=$HOME/SageMaker/.kernels
+CONFIGS_DIR=$HOME/SageMaker/ds-toolkit/sagamaker/lifecycle
+
+pushd .jupyter
+ln -sf $CONFIGS_DIR/jupyter_server_config.py
+ln -sf $CONFIGS_DIR/jupyter_notebook_config.py
+ln -sf $CONFIGS_DIR/lab
+ln -sf $CONFIGS_DIR/nbconfig
+
+popd
 
 for env in $CUSTOM_KERNELS_DIR/*; do
 
@@ -45,10 +54,8 @@ done
 
 # echo "c.EnvironmentKernelSpecManager.use_conda_directly = False" >> $HOME/.jupyter/jupyter_notebook_config.py
 
-echo "c.NotebookApp.terminado_settings.shell_command = bash" >> $HOME/.jupyter/jupyter_notebook_config.py
-
 rm $HOME/.condarc
-ln -sf $HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/.condarc $HOME/.condarc
+ln -sf $CONFIGS_DIR/.condarc $HOME/.condarc
 #
 EOF
 echo "Restarting the Jupyter server.."
