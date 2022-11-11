@@ -30,7 +30,7 @@ printenv
 HOME=/home/ec2-user
 
 CUSTOM_KERNELS_DIR=$HOME/SageMaker/.kernels
-CONFIGS_DIR=$HOME/SageMaker/ds-toolkit/sagamaker/lifecycle
+CONFIGS_DIR=$HOME/SageMaker/ds-toolkit/sagemaker/lifecycle
 
 pushd .jupyter
 rm -rf jupyter_notebook_config.py jupyter_server_config.py lab nbconfig
