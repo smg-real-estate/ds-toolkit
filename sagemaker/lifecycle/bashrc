@@ -1,7 +1,7 @@
 cd $JUPYTER_SERVER_ROOT
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_ROOT_PREFIX="/home/ec2-user/SageMaker/microbamba";
+export MAMBA_ROOT_PREFIX="/home/ec2-user/SageMaker/micromamba";
 export MAMBA_EXE="$MAMBA_ROOT_PREFIX/bin/micromamba";
 
 __mamba_setup="$($MAMBA_ROOT_PREFIX/bin/micromamba shell hook --shell bash --prefix $MAMBA_ROOT_PREFIX 2> /dev/null)"
