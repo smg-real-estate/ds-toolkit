@@ -27,7 +27,9 @@ set -euxo pipefail
 unset SUDO_UID
 printenv
 
-CUSTOM_KERNELS_DIR=/home/ec2-user/SageMaker/.kernels
+HOME=/home/ec2-user
+
+CUSTOM_KERNELS_DIR=$HOME/SageMaker/.kernels
 
 for env in $CUSTOM_KERNELS_DIR/*; do
 
@@ -41,11 +43,12 @@ for env in $CUSTOM_KERNELS_DIR/*; do
 done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
-# echo "c.EnvironmentKernelSpecManager.use_conda_directly = False" >> /home/ec2-user/.jupyter/jupyter_notebook_config.py
+# echo "c.EnvironmentKernelSpecManager.use_conda_directly = False" >> $HOME/.jupyter/jupyter_notebook_config.py
 
-echo "c.NotebookApp.terminado_settings.shell_command = bash" >> /home/ec2-user/.jupyter/jupyter_notebook_config.py
+echo "c.NotebookApp.terminado_settings.shell_command = bash" >> $HOME/.jupyter/jupyter_notebook_config.py
 
-# rm /home/ec2-user/.condarc
+rm $HOME/.condarc
+ln -sf $HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/.condarc $HOME/.condarc
 #
 EOF
 echo "Restarting the Jupyter server.."

@@ -1,0 +1,11 @@
+pkgs_dirs:
+  - ~/anaconda3/pkgs
+auto_update_conda: false
+auto_activate_base: true
+channels:
+  - conda-forge
+  - defaults
+channel_priority: flexible
+envs_dirs:
+ - ~/anaconda3/envs
+ - ~/SageMaker/.kernels
