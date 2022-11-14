@@ -41,6 +41,11 @@ ln -sf $CONFIGS_DIR/nbconfig
 
 popd
 
+if [ -f $HOME/.condarc ]; then
+  rm $HOME/.condarc
+fi
+ln -sf $CONFIGS_DIR/.condarc $HOME/.condarc
+
 for env in $CUSTOM_KERNELS_DIR/*; do
 
   BASENAME=$(basename "$env")
@@ -53,8 +58,6 @@ done
 
 # echo "c.EnvironmentKernelSpecManager.use_conda_directly = False" >> $HOME/.jupyter/jupyter_notebook_config.py
 
-rm $HOME/.condarc
-ln -sf $CONFIGS_DIR/.condarc $HOME/.condarc
 #
 EOF
 echo "Restarting the Jupyter server.."
