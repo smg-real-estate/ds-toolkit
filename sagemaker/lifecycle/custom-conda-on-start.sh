@@ -22,6 +22,7 @@ sudo -u ec2-user -E git config --global alias.fp force-push
 sudo -u ec2-user -E git config --global init.defaultbranch main
 ################################################################################
 
+##################### script that is run under ec2-user ########################
 sudo -n -u ec2-user -i <<'EOF'
 set -euxo pipefail
 unset SUDO_UID
@@ -60,6 +61,8 @@ done
 
 #
 EOF
+################################################################################
+
 echo "Restarting the Jupyter server.."
 systemctl restart jupyter-server
 
