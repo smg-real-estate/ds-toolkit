@@ -16,30 +16,22 @@ set -euxo pipefail
 # Install a separate conda installation via Miniconda
 EC2_HOME=/home/ec2-user
 PRE_COMMIT_HOME=${EC2_HOME}/SageMaker/.cache/pre-commit
-WORKING_DIR=/home/ec2-user/SageMaker/custom-miniconda
-if [ ! -d "${WORKING_DIR}" ]; then
-  mkdir -p ${WORKING_DIR}
-  wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh -O "$WORKING_DIR/miniconda.sh"
-  bash "$WORKING_DIR/miniconda.sh" -b -u -p "$WORKING_DIR/miniconda" 
-  rm -rf "$WORKING_DIR/miniconda.sh"
-fi
+KERNELS_DIR=$EC2_HOME/SageMaker/.kernels
 
-export PATH=$WORKING_DIR/miniconda/bin:$PATH
-
-# Create a custom conda environment
-source "$WORKING_DIR/miniconda/bin/activate"
-
-conda install mamba -n base -c conda-forge
+source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc
 
 KERNEL_NAME="smg-re"
-PYTHON_VERSIONS=("3.7" "3.8" "3.9")
+PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10")
 
 for python_version in ${PYTHON_VERSIONS[@]}; do
-    conda create -y -n "${KERNEL_NAME}-py${python_version}" python=${python_version} \
+    ENV_NAME="${KERNEL_NAME}-py${python_version}"
+    micromamba create -y python=${python_version} \
+      -p $KERNELS_DIR/$ENV_NAME \
       ipykernel watchtower urllib3[secure] requests pre-commit nbdime
-    conda activate "${KERNEL_NAME}-py${python_version}"
-    python -m ipykernel install --user --name "${KERNEL_NAME}-py${python_version}" \
-      --display-name "Python (${python_version}) (${KERNEL_NAME})" --sys-prefix --env PATH "${PATH}
+   
+    micromamba activate $KERNELS_DIR/$ENV_NAME
+    python -m ipykernel install --user --name "$ENV_NAME" \
+    --display-name "Python (${ENV_NAME})"
 done
 
 cd ${EC2_HOME}/SageMaker
