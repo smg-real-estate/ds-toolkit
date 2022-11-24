@@ -47,6 +47,8 @@ if [ -f $HOME/.condarc ]; then
 fi
 ln -sf $CONFIGS_DIR/.condarc $HOME/.condarc
 
+conda install -n JupyterSystemEnv -c conda-forge pre-commit -y
+
 for env in $CUSTOM_KERNELS_DIR/*; do
 
   BASENAME=$(basename "$env")
