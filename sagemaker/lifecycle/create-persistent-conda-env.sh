@@ -18,6 +18,12 @@ EC2_HOME=/home/ec2-user
 PRE_COMMIT_HOME=${EC2_HOME}/SageMaker/.cache/pre-commit
 KERNELS_DIR=$EC2_HOME/SageMaker/.kernels
 
+if [ ! -d $EC2_HOME/SageMaker/micromamba ]; then
+    mkdir $EC2_HOME/SageMaker/micromamba && pushd $EC2_HOME/SageMaker/micromamba
+    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+    popd
+fi
+
 source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc
 
 KERNEL_NAME="smg-re"
