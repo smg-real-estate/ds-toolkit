@@ -42,7 +42,7 @@ ln -sf $CONFIGS_DIR/nbconfig
 
 popd
 
-echo "source $HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.bashrc
+echo "source $HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $HOME/.bashrc
 
 
 if [ -f $HOME/.condarc ]; then
