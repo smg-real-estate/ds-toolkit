@@ -92,7 +92,7 @@ PROJECT_URL=$PROJECT_URL
 BRANCH=$BRANCH
 EC2_HOME=/home/ec2-user
 IDLE_TIME=7200
-CONDA_ENV_NAME=smg-re-py3.7
+CONDA_ENV_NAME=smg-re-py3.9
 CONDA_ENV_PATH=${EC2_HOME}/SageMaker/.kernels/${CONDA_ENV_NAME}
 echo "Fetching the autostop script"
 wget ${PROJECT_URL}/${BRANCH}/sagemaker/lifecycle/autostop.py \
