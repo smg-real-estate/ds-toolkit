@@ -27,7 +27,7 @@ fi
 source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc
 
 KERNEL_NAME="smg-re"
-PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10")
+PYTHON_VERSIONS=("3.9" "3.10")
 
 for python_version in ${PYTHON_VERSIONS[@]}; do
     ENV_NAME="${KERNEL_NAME}-py${python_version}"
@@ -42,24 +42,28 @@ done
 
 cd ${EC2_HOME}/SageMaker
 
-py37_projects=("ml-homegate-projects")
-conda activate "${KERNEL_NAME}-py3.7"
+py310_projects=("ml-homegate-projects")
+conda activate "${KERNEL_NAME}-py3.10"
 
-for project in ${py37_projects[@]}; do
-  pushd $project
-  if [ -e .pre-commit-config.yaml ]; then
-    pre-commit install --install-hooks  
+for project in ${py310_projects[@]}; do
+  if [ -d $project ]; then
+      pushd $project
+      if [ -e .pre-commit-config.yaml ]; then
+        pre-commit install --install-hooks  
+      fi
+      popd
   fi
-  popd
 done
 
 py39_projects=("managed-airflow" "data-platform")
 conda activate "${KERNEL_NAME}-py3.9"
 
 for project in ${py39_projects[@]}; do
-  pushd $project
-  if [ -e .pre-commit-config.yaml ]; then
-    pre-commit install --install-hooks  
+  if [ -d $project ]; then
+      pushd $project
+      if [ -e .pre-commit-config.yaml ]; then
+        pre-commit install --install-hooks  
+      fi
+      popd
   fi
-  popd
 done
