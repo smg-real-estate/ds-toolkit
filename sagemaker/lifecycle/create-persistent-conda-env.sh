@@ -17,21 +17,24 @@ set -euxo pipefail
 EC2_HOME=/home/ec2-user
 PRE_COMMIT_HOME=${EC2_HOME}/SageMaker/.cache/pre-commit
 KERNELS_DIR=$EC2_HOME/SageMaker/.kernels
+MICROMAMBA_URL=https://micromamba.snakepit.net/api/micromamba/linux-64/latest
 
 if [ ! -d $EC2_HOME/SageMaker/micromamba ]; then
-    mkdir $EC2_HOME/SageMaker/micromamba && pushd $EC2_HOME/SageMaker/micromamba
-    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
-    popd
+    mkdir $EC2_HOME/SageMaker/micromamba \
+    && pushd $EC2_HOME/SageMaker/micromamba \
+    && (curl -Ls $MICROMAMBA_URL | tar -xvj bin/micromamba) \
+    && popd
 fi
 
+pushd $EC2_HOME/SageMaker/ds-toolkit && git pull && popd
 source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc
 
 KERNEL_NAME="smg-re"
-PYTHON_VERSIONS=("3.7" "3.8" "3.9" "3.10")
+PYTHON_VERSIONS=("3.9" "3.10")
 
 for python_version in ${PYTHON_VERSIONS[@]}; do
     ENV_NAME="${KERNEL_NAME}-py${python_version}"
-    micromamba create -y python=${python_version} \
+    micromamba create -q -y python=${python_version} \
       -p $KERNELS_DIR/$ENV_NAME \
       ipykernel watchtower urllib3[secure] requests pre-commit nbdime
    
@@ -42,24 +45,28 @@ done
 
 cd ${EC2_HOME}/SageMaker
 
-py37_projects=("ml-homegate-projects")
-conda activate "${KERNEL_NAME}-py3.7"
+py310_projects=("ml-homegate-projects")
+micromamba activate "${KERNELS_DIR}/${KERNEL_NAME}-py3.10"
 
-for project in ${py37_projects[@]}; do
-  pushd $project
-  if [ -e .pre-commit-config.yaml ]; then
-    pre-commit install --install-hooks  
+for project in ${py310_projects[@]}; do
+  if [ -d $project ]; then
+      pushd $project
+      if [ -e .pre-commit-config.yaml ]; then
+        pre-commit install --install-hooks  
+      fi
+      popd
   fi
-  popd
 done
 
 py39_projects=("managed-airflow" "data-platform")
-conda activate "${KERNEL_NAME}-py3.9"
+micromamba activate "${KERNELS_DIR}/${KERNEL_NAME}-py3.9"
 
 for project in ${py39_projects[@]}; do
-  pushd $project
-  if [ -e .pre-commit-config.yaml ]; then
-    pre-commit install --install-hooks  
+  if [ -d $project ]; then
+      pushd $project
+      if [ -e .pre-commit-config.yaml ]; then
+        pre-commit install --install-hooks  
+      fi
+      popd
   fi
-  popd
 done

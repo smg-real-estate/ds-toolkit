@@ -3,23 +3,26 @@ set -euxo pipefail
 ########################## Git setup ###########################################
 GIT_USER=$GIT_USER
 GIT_EMAIL=$GIT_EMAIL
-sudo -u ec2-user -E git config --global user.email "${GIT_EMAIL}"
-sudo -u ec2-user -E git config --global user.name "${GIT_USER}"
-sudo -u ec2-user -E git config --global pull.rebase true
-sudo -u ec2-user -E git config --global alias.a add
-sudo -u ec2-user -E git config --global alias.b branch
-sudo -u ec2-user -E git config --global alias.c commit
-sudo -u ec2-user -E git config --global alias.cl clone
-sudo -u ec2-user -E git config --global alias.co checkout
-sudo -u ec2-user -E git config --global alias.cp cherry-pick
-sudo -u ec2-user -E git config --global alias.m merge
-sudo -u ec2-user -E git config --global alias.p push --follow-tags
-sudo -u ec2-user -E git config --global alias.pu pull
-sudo -u ec2-user -E git config --global alias.r reset
-sudo -u ec2-user -E git config --global alias.s status
-sudo -u ec2-user -E git config --global alias.force-push push --force-with-lease
-sudo -u ec2-user -E git config --global alias.fp force-push
-sudo -u ec2-user -E git config --global init.defaultbranch main
+function git_config() {
+  sudo -u ec2-user -E git config --global $1 $2
+}
+git_config user.email "${GIT_EMAIL}"
+git_config user.name "${GIT_USER}"
+git_config pull.rebase true
+git_config alias.a add
+git_config alias.b branch
+git_config alias.c commit
+git_config alias.cl clone
+git_config alias.co checkout
+git_config alias.cp cherry-pick
+git_config alias.m merge
+git_config alias.p push --follow-tags
+git_config alias.pu pull
+git_config alias.r reset
+git_config alias.s status
+git_config alias.force-push push --force-with-lease
+git_config alias.fp force-push
+git_config init.defaultbranch main
 ################################################################################
 
 ##################### script that is run under ec2-user ########################
@@ -42,6 +45,8 @@ ln -sf $CONFIGS_DIR/nbconfig
 
 popd
 
+pushd $CONFIGS_DIR && git pull && popd
+
 echo "source $HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $HOME/.bashrc
 
 
@@ -50,7 +55,8 @@ if [ -f $HOME/.condarc ]; then
 fi
 ln -sf $CONFIGS_DIR/.condarc $HOME/.condarc
 
-conda install -n JupyterSystemEnv -c conda-forge pre-commit -y
+# skip installing pre-commit
+# conda install -n JupyterSystemEnv -c conda-forge pre-commit -y
 
 for env in $CUSTOM_KERNELS_DIR/*; do
 
@@ -59,6 +65,7 @@ for env in $CUSTOM_KERNELS_DIR/*; do
 
   python -m ipykernel install --user --name "$BASENAME" \
     --display-name "Python (${BASENAME})"
+  conda deactivate
 done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
@@ -69,7 +76,7 @@ EOF
 ################################################################################
 
 echo "Restarting the Jupyter server.."
-systemctl restart jupyter-server
+sudo systemctl restart jupyter-server
 
 # OVERVIEW
 # This part of the script stops a SageMaker notebook once it's idle for more than 1 hour (default time)
@@ -84,7 +91,6 @@ systemctl restart jupyter-server
 PROJECT_URL=$PROJECT_URL
 BRANCH=$BRANCH
 EC2_HOME=/home/ec2-user
-echo "source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.profile
 IDLE_TIME=7200
 CONDA_ENV_NAME=smg-re-py3.7
 CONDA_ENV_PATH=${EC2_HOME}/SageMaker/.kernels/${CONDA_ENV_NAME}
