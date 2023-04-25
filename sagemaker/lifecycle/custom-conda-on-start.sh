@@ -42,6 +42,8 @@ ln -sf $CONFIGS_DIR/nbconfig
 
 popd
 
+pushd $CONFIGS_DIR && git pull && popd
+
 echo "source $HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $HOME/.bashrc
 
 
