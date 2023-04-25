@@ -92,7 +92,6 @@ sudo systemctl restart jupyter-server
 PROJECT_URL=$PROJECT_URL
 BRANCH=$BRANCH
 EC2_HOME=/home/ec2-user
-echo "source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc" >> $EC2_HOME/.profile
 IDLE_TIME=7200
 CONDA_ENV_NAME=smg-re-py3.7
 CONDA_ENV_PATH=${EC2_HOME}/SageMaker/.kernels/${CONDA_ENV_NAME}
