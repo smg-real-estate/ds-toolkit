@@ -26,6 +26,7 @@ if [ ! -d $EC2_HOME/SageMaker/micromamba ]; then
     && popd
 fi
 
+pushd $EC2_HOME/SageMaker/ds-toolkit && git pull && popd
 source $EC2_HOME/SageMaker/ds-toolkit/sagemaker/lifecycle/bashrc
 
 KERNEL_NAME="smg-re"
