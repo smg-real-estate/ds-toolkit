@@ -62,6 +62,7 @@ for env in $CUSTOM_KERNELS_DIR/*; do
 
   python -m ipykernel install --user --name "$BASENAME" \
     --display-name "Python (${BASENAME})"
+  conda deactivate
 done
 # Optionally, uncomment these lines to disable SageMaker-provided Conda functionality.
 
