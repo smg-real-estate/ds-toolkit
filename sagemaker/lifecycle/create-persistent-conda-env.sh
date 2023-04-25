@@ -31,7 +31,7 @@ PYTHON_VERSIONS=("3.9" "3.10")
 
 for python_version in ${PYTHON_VERSIONS[@]}; do
     ENV_NAME="${KERNEL_NAME}-py${python_version}"
-    micromamba create -y python=${python_version} \
+    micromamba create -q -y python=${python_version} \
       -p $KERNELS_DIR/$ENV_NAME \
       ipykernel watchtower urllib3[secure] requests pre-commit nbdime
    
@@ -43,7 +43,7 @@ done
 cd ${EC2_HOME}/SageMaker
 
 py310_projects=("ml-homegate-projects")
-conda activate "${KERNEL_NAME}-py3.10"
+micromamba activate "${KERNELS_DIR}/${KERNEL_NAME}-py3.10"
 
 for project in ${py310_projects[@]}; do
   if [ -d $project ]; then
@@ -56,7 +56,7 @@ for project in ${py310_projects[@]}; do
 done
 
 py39_projects=("managed-airflow" "data-platform")
-conda activate "${KERNEL_NAME}-py3.9"
+micromamba activate "${KERNELS_DIR}/${KERNEL_NAME}-py3.9"
 
 for project in ${py39_projects[@]}; do
   if [ -d $project ]; then
