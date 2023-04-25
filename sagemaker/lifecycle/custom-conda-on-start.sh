@@ -69,7 +69,7 @@ EOF
 ################################################################################
 
 echo "Restarting the Jupyter server.."
-systemctl restart jupyter-server
+sudo systemctl restart jupyter-server
 
 # OVERVIEW
 # This part of the script stops a SageMaker notebook once it's idle for more than 1 hour (default time)
