@@ -23,7 +23,6 @@ git_config alias.s status
 git_config alias.force-push push --force-with-lease
 git_config alias.fp force-push
 git_config init.defaultbranch main
-git_config credential.helper store
 ################################################################################
 
 ##################### script that is run under ec2-user ########################
