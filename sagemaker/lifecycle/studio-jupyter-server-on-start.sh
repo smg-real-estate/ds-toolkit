@@ -75,13 +75,8 @@ curl -s -L -o .auto-shutdown/${extension_name}.tar.gz \
 cd .auto-shutdown && tar xzf ${extension_name}.tar.gz
 cd ${extension_name}
 
-# activate stuidio conda environment and install the extension
-eval "$(${CONDA_DIR}/bin/conda shell.bash hook 2> /dev/null)"
-conda activate studio
-
-pip install --no-dependencies --no-build-isolation -e .
-jupyter serverextension enable --py sagemaker_studio_autoshutdown
-conda deactivate
+conda run -n studio pip install --no-dependencies --no-build-isolation -e .
+conda run -n studio jupyter serverextension enable --py sagemaker_studio_autoshutdown
 
 # Restarts the jupyter server
 nohup supervisorctl -c /etc/supervisor/conf.d/supervisord.conf restart jupyterlabserver
