@@ -36,7 +36,7 @@ for python_version in ${PYTHON_VERSIONS[@]}; do
     ENV_NAME="${KERNEL_NAME}-py${python_version}"
     micromamba create -q -y python=${python_version} \
       -p $KERNELS_DIR/$ENV_NAME \
-      ipykernel watchtower urllib3[secure] requests pre-commit nbdime
+      ipykernel watchtower urllib3[secure] requests pre-commit nbdime -c conda-forge
 
     micromamba run -r $KERNELS_DIR/$ENV_NAME \
       python -m ipykernel install --user --name "$ENV_NAME" \
