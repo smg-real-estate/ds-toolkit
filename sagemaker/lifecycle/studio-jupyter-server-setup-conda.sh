@@ -27,36 +27,36 @@ if [ ! -d $SAGEMAKER_HOME/.micromamba ]; then
 fi
 
 pushd $SAGEMAKER_HOME/ds-toolkit && git pull && popd
-# source $SAGEMAKER_HOME/ds-toolkit/sagemaker/lifecycle/bashrc
+source $SAGEMAKER_HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh
 
-# KERNEL_NAME="smg-re"
-# PYTHON_VERSIONS=("3.9" "3.10")
+KERNEL_NAME="smg-re"
+PYTHON_VERSIONS=("3.9" "3.10")
 
-# for python_version in ${PYTHON_VERSIONS[@]}; do
-#     ENV_NAME="${KERNEL_NAME}-py${python_version}"
-#     micromamba create -q -y python=${python_version} \
-#       -p $KERNELS_DIR/$ENV_NAME \
-#       ipykernel watchtower urllib3[secure] requests pre-commit nbdime
-#    
-#     micromamba activate $KERNELS_DIR/$ENV_NAME
-#     python -m ipykernel install --user --name "$ENV_NAME" \
-#     --display-name "Python (${ENV_NAME})"
-# done
+for python_version in ${PYTHON_VERSIONS[@]}; do
+    ENV_NAME="${KERNEL_NAME}-py${python_version}"
+    micromamba create -q -y python=${python_version} \
+      -p $KERNELS_DIR/$ENV_NAME \
+      ipykernel watchtower urllib3[secure] requests pre-commit nbdime
 
-# cd ${SAGEMAKER_HOME}/SageMaker
+    micromamba run -r $KERNELS_DIR/$ENV_NAME \
+      python -m ipykernel install --user --name "$ENV_NAME" \
+      --display-name "Python (${ENV_NAME})"
+done
 
-# py310_projects=("ml-homegate-projects")
-# micromamba activate "${KERNELS_DIR}/${KERNEL_NAME}-py3.10"
+cd ${SAGEMAKER_HOME}
 
-# for project in ${py310_projects[@]}; do
-#   if [ -d $project ]; then
-#       pushd $project
-#       if [ -e .pre-commit-config.yaml ]; then
-#         pre-commit install --install-hooks  
-#       fi
-#       popd
-#   fi
-# done
+py310_projects=("ds-projects")
+
+for project in ${py310_projects[@]}; do
+  if [ -d $project ]; then
+      pushd $project
+      if [ -e .pre-commit-config.yaml ]; then
+      micromamba run -r "${KERNELS_DIR}/${KERNEL_NAME}-py3.10" \
+        pre-commit install --install-hooks  
+      fi
+      popd
+  fi
+done
 
 # py39_projects=("managed-airflow" "data-platform")
 # micromamba activate "${KERNELS_DIR}/${KERNEL_NAME}-py3.9"
