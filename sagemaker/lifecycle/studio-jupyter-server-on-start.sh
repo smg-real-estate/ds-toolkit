@@ -37,8 +37,29 @@ for key, value in credentials.items():
 EOL
 
 chmod +x ~/.aws-credential-helper.py
-git config --global credential.helper ~/.aws-credential-helper.py
-
+GIT_USER=$GIT_USER
+GIT_EMAIL=$GIT_EMAIL
+function git_config() {
+  git config --global $1 $2
+}
+git_config credential.helper ~/.aws-credential-helper.py
+git_config user.email "${GIT_EMAIL}"
+git_config user.name "${GIT_USER}"
+git_config pull.rebase true
+git_config alias.a add
+git_config alias.b branch
+git_config alias.c commit
+git_config alias.cl clone
+git_config alias.co checkout
+git_config alias.cp cherry-pick
+git_config alias.m merge
+git_config alias.p push --follow-tags
+git_config alias.pu pull
+git_config alias.r reset
+git_config alias.s status
+git_config alias.force-push push --force-with-lease
+git_config alias.fp force-push
+git_config init.defaultbranch main
 #####################################################################
 ################### Configure Auto-shutdown #########################
 # timeout in minutes
