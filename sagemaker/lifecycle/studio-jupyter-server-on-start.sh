@@ -66,7 +66,7 @@ git_config init.defaultbranch main
 #####################################################################
 ################### Configure Auto-shutdown #########################
 # timeout in minutes
-export TIMEOUT_IN_MINS=10
+export TIMEOUT_IN_MINS=120
 cd /home/sagemaker-user
 mkdir -p .auto-shutdown
 
