@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euxo pipefail
+
 PRE_COMMIT_HOME=${HOME}/.cache/pre-commit
 KERNELS_DIR=${HOME}/.kernels
 
