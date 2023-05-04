@@ -16,7 +16,7 @@ set -euxo pipefail
 # Install a separate conda installation via Miniconda
 SAGEMAKER_HOME=/home/sagemaker-user
 PRE_COMMIT_HOME=${SAGEMAKER_HOME}/.cache/pre-commit
-KERNELS_DIR=$SAGEMAKER_HOME/.kernels
+KERNELS_DIR=${SAGEMAKER_HOME}/.kernels
 MICROMAMBA_URL=https://micromamba.snakepit.net/api/micromamba/linux-64/latest
 
 if [ ! -d $SAGEMAKER_HOME/.micromamba ]; then
