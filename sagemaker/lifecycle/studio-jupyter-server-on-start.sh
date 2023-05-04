@@ -4,8 +4,11 @@ set -eux
 
 ######################## Configure GIT ##############################
 #####################################################################
+#
+conda install -n base -y boto3 -c conda-forge
+PYTHONEXEC=$(conda -n base which python3)
 cat > ~/.aws-credential-helper.py <<EOL
-#!/opt/conda/envs/studio/bin/python3
+#!${PYTHONEXEC}
 import sys
 import json
 import boto3
