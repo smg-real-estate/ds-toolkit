@@ -6,7 +6,7 @@ set -eux
 #####################################################################
 #
 conda install -n base -y boto3 -c conda-forge
-PYTHONEXEC=$(conda -n base which python3)
+PYTHONEXEC=$(conda run -n base which python3)
 cat > ~/.aws-credential-helper.py <<EOL
 #!${PYTHONEXEC}
 import sys
