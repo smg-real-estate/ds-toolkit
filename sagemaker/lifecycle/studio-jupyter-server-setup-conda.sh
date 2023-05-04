@@ -14,24 +14,24 @@ set -euxo pipefail
 
 
 # Install a separate conda installation via Miniconda
-SAGEMAKER_HOME=/home/sagemaker-user
-PRE_COMMIT_HOME=${SAGEMAKER_HOME}/.cache/pre-commit
-KERNELS_DIR=${SAGEMAKER_HOME}/.kernels
+PRE_COMMIT_HOME=${HOME}/.cache/pre-commit
+KERNELS_DIR=${HOME}/.kernels
 MICROMAMBA_URL=https://micromamba.snakepit.net/api/micromamba/linux-64/latest
 
-if [ ! -d $SAGEMAKER_HOME/.micromamba ]; then
-    mkdir $SAGEMAKER_HOME/.micromamba \
-    && pushd $SAGEMAKER_HOME/.micromamba \
+if [ ! -d $HOME/.micromamba ]; then
+    mkdir $HOME/.micromamba \
+    && pushd $HOME/.micromamba \
     && (curl -Ls $MICROMAMBA_URL | tar -xvj bin/micromamba) \
     && popd
 fi
 
-pushd $SAGEMAKER_HOME/ds-toolkit && git pull && popd
-source $SAGEMAKER_HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh
+pushd $HOME/ds-toolkit && git pull && popd
+cp $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh $HOME/.micromamba/bashrc-studio.sh
+source $HOME/.micromamba/bashrc-studio.sh
 
 micromamba config append channels conda-forge
 micromamba config append channels defaults
-micromamba config append envs_dirs $SAGEMAKER_HOME/.conda/envs
+micromamba config append envs_dirs $HOME/.conda/envs
 micromamba config append envs_dirs $KERNELS_DIR
 
 KERNEL_NAME="smg-re"
@@ -48,7 +48,7 @@ for python_version in ${PYTHON_VERSIONS[@]}; do
       --display-name "Python (${ENV_NAME})"
 done
 
-cd ${SAGEMAKER_HOME}
+cd ${HOME}
 
 py310_projects=("ds-projects")
 

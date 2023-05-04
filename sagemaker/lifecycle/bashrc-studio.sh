@@ -1,9 +1,8 @@
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
-SAGEMAKER_HOME=/home/sagemaker-user
-export MAMBA_ROOT_PREFIX="$SAGEMAKER_HOME/.micromamba";
-export MAMBA_EXE="$MAMBA_ROOT_PREFIX/bin/micromamba";
-export TOOLS=$SAGEMAKER_HOME/.tools
+export MAMBA_ROOT_PREFIX="${HOME}/.micromamba";
+export MAMBA_EXE="${MAMBA_ROOT_PREFIX}/bin/micromamba";
+export TOOLS=$HOME/.tools
 
 export PATH=$TOOLS/bin:$PATH
 
