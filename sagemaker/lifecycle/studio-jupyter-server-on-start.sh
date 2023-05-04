@@ -63,11 +63,77 @@ git_config alias.s status
 git_config alias.force-push push --force-with-lease
 git_config alias.fp force-push
 git_config init.defaultbranch main
-#####################################################################
+
+##################### Install micromamba ############################
+PRE_COMMIT_HOME=${HOME}/.cache/pre-commit
+KERNELS_DIR=${HOME}/.kernels
+MICROMAMBA_URL=https://micromamba.snakepit.net/api/micromamba/linux-64/latest
+
+if [ ! -d $HOME/.micromamba ]; then
+    mkdir $HOME/.micromamba \
+    && pushd $HOME/.micromamba \
+    && (curl -Ls $MICROMAMBA_URL | tar -xvj bin/micromamba) \
+    && popd
+fi
+
+if [ -d $HOME/ds-toolkit ]; then
+  pushd $HOME/ds-toolkit && git pull && popd
+  cp $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh $HOME/.micromamba/bashrc-studio.sh
+  source $HOME/.micromamba/bashrc-studio.sh
+
+  micromamba config append channels conda-forge
+  micromamba config append channels defaults
+  micromamba config append envs_dirs $HOME/.conda/envs
+  micromamba config append envs_dirs $KERNELS_DIR
+
+################### Create conda environments #######################
+KERNEL_NAME="smg-re"
+PYTHON_VERSIONS=("3.9" "3.10")
+
+for python_version in ${PYTHON_VERSIONS[@]}; do
+    ENV_NAME="${KERNEL_NAME}-py${python_version}"
+    micromamba create -q -y python=${python_version} \
+      -p $KERNELS_DIR/$ENV_NAME \
+      ipykernel watchtower urllib3[secure] requests pre-commit nbdime -c conda-forge
+
+    micromamba run -r $KERNELS_DIR/$ENV_NAME \
+      python -m ipykernel install --user --name "$ENV_NAME" \
+      --display-name "Python (${ENV_NAME})"
+done
+
+################### Install pre-commit hooks ########################
+cd ${HOME}
+
+py310_projects=("ds-projects")
+
+for project in ${py310_projects[@]}; do
+  if [ -d $project ]; then
+      pushd $project
+      if [ -e .pre-commit-config.yaml ]; then
+        micromamba run -r "${KERNELS_DIR}/${KERNEL_NAME}-py3.10" \
+          pre-commit install --install-hooks  
+      fi
+      popd
+  fi
+done
+
+py39_projects=("managed-airflow" "data-platform")
+
+for project in ${py39_projects[@]}; do
+  if [ -d $project ]; then
+      pushd $project
+      if [ -e .pre-commit-config.yaml ]; then
+        micromamba run -r "${KERNELS_DIR}/${KERNEL_NAME}-py3.9" \
+          pre-commit install --install-hooks  
+      fi
+      popd
+  fi
+done
+
 ################### Configure Auto-shutdown #########################
 # timeout in minutes
 export TIMEOUT_IN_MINS=120
-cd /home/sagemaker-user
+cd $HOME
 mkdir -p .auto-shutdown
 
 # Create the command-line script for setting the idle timeout
