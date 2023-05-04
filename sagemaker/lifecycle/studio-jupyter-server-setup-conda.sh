@@ -29,6 +29,11 @@ fi
 pushd $SAGEMAKER_HOME/ds-toolkit && git pull && popd
 source $SAGEMAKER_HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh
 
+micromamba config append channels conda-forge
+micromamba config append channels defaults
+micromamba config append envs_dirs $SAGEMAKER_HOME/.conda/envs
+micromamba config append envs_dirs $KERNELS_DIR
+
 KERNEL_NAME="smg-re"
 PYTHON_VERSIONS=("3.9" "3.10")
 
