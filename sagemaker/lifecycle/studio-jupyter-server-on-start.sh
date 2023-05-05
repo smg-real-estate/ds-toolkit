@@ -43,7 +43,7 @@ chmod +x ~/.aws-credential-helper.py
 GIT_USER=$GIT_USER
 GIT_EMAIL=$GIT_EMAIL
 function git_config() {
-  git config --global $1 $2
+  git config --global $1 "$2"
 }
 git_config credential.helper ~/.aws-credential-helper.py
 git_config user.email "${GIT_EMAIL}"
