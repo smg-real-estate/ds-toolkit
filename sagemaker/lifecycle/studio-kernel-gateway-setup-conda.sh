@@ -11,8 +11,9 @@ if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
   source ~/.bash_profile
 
     for env in $KERNELS_DIR/*; do
+        python_version=$(micromamba run -p $KERNELS_DIR/$env python -V)
         micromamba run -p $KERNELS_DIR/$env \
-          python -m ipykernel install --user --name "$BASENAME" \
-          --display-name "Python (${BASENAME})"
+          python -m ipykernel install --user --name "$env" \
+          --display-name "${python_version}"
     done
 fi
