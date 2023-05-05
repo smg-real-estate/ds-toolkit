@@ -13,6 +13,7 @@ if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
   micromamba config append channels defaults
   micromamba config append envs_dirs $KERNELS_DIR
   micromamba config append envs_dirs $HOME/.conda/envs
+  micromamba config append envs_dirs /opt/conda/envs
 
   ################### Create conda environments #######################
   KERNEL_NAME="smg-re"
