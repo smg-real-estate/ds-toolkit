@@ -24,10 +24,10 @@ if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
       micromamba create -q -y python=${python_version} \
         -p $KERNELS_DIR/$ENV_NAME \
         ipykernel watchtower urllib3[secure] requests pre-commit nbdime -c conda-forge
-
+      
       micromamba run -p $KERNELS_DIR/$ENV_NAME \
         python -m ipykernel install --user --name "$ENV_NAME" \
-        --display-name "Python (${python_version})"
+        --display-name "Python ${python_version}"
   done
 
   ################### Install pre-commit hooks ########################
