@@ -9,9 +9,9 @@ if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
   ln -sf $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ~/.bash_profile
   source ~/.bash_profile
 
-  micromamba config append channels conda-forge
+  micromamba config prepend channels conda-forge
   micromamba config append channels defaults
-  micromamba config append envs_dirs $KERNELS_DIR
+  micromamba config prepend envs_dirs $KERNELS_DIR
   micromamba config append envs_dirs $HOME/.conda/envs
   micromamba config append envs_dirs /opt/conda/envs
 
@@ -25,9 +25,9 @@ if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
         -p $KERNELS_DIR/$ENV_NAME \
         ipykernel watchtower urllib3[secure] requests pre-commit nbdime -c conda-forge
 
-      micromamba run -r $KERNELS_DIR/$ENV_NAME \
+      micromamba run -p $KERNELS_DIR/$ENV_NAME \
         python -m ipykernel install --user --name "$ENV_NAME" \
-        --display-name "Python (${ENV_NAME})"
+        --display-name "Python (${python_version})"
   done
 
   ################### Install pre-commit hooks ########################
@@ -39,7 +39,7 @@ if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
     if [ -d $project ]; then
         pushd $project
         if [ -e .pre-commit-config.yaml ]; then
-          micromamba run -r "${KERNELS_DIR}/${KERNEL_NAME}-py3.10" \
+          micromamba run -p "${KERNELS_DIR}/${KERNEL_NAME}-py3.10" \
             pre-commit install --install-hooks  
         fi
         popd
@@ -52,7 +52,7 @@ if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
     if [ -d $project ]; then
         pushd $project
         if [ -e .pre-commit-config.yaml ]; then
-          micromamba run -r "${KERNELS_DIR}/${KERNEL_NAME}-py3.9" \
+          micromamba run -p "${KERNELS_DIR}/${KERNEL_NAME}-py3.9" \
             pre-commit install --install-hooks  
         fi
         popd
