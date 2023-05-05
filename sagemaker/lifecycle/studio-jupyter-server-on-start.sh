@@ -78,7 +78,7 @@ fi
 
 ################### Configure Auto-shutdown #########################
 # timeout in minutes
-export TIMEOUT_IN_MINS=120
+export TIMEOUT_IN_MINS={$TIMEOUT_IN_MINS:-"120"}
 cd $HOME
 mkdir -p .auto-shutdown
 

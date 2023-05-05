@@ -6,5 +6,6 @@
  export AWS_SECRET_NAME='secret/name'
  export PROJECT_URL=https://raw.githubusercontent.com/smg-real-estate/ds-toolkit
  export BRANCH=main
+ export TIMEOUT_IN_MINS=120
  export SCRIPT_PATH=sagemaker/lifecycle/studio-jupyter-server-on-start.sh
  curl -s ${PROJECT_URL}/${BRANCH}/${SCRIPT_PATH} | bash -s
