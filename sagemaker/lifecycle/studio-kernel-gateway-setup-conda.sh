@@ -6,12 +6,13 @@ ln -sf /root /home/sagemaker-user
 PRE_COMMIT_HOME=${HOME}/.cache/pre-commit
 KERNELS_DIR=${HOME}/.kernels
 
-if [ ! -d $HOME/.micromamba ]; then
-  source $HOME/.micromamba/bashrc-studio.sh
-fi
+if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
+  ln -sf $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ~/.bash_profile
+  source ~/.bash_profile
 
-for env in $KERNELS_DIR/*; do
-    micromamba run -r $KERNELS_DIR/$env \
-      python -m ipykernel install --user --name "$BASENAME" \
-      --display-name "Python (${BASENAME})"
-done
+    for env in $KERNELS_DIR/*; do
+        micromamba run -p $KERNELS_DIR/$env \
+          python -m ipykernel install --user --name "$BASENAME" \
+          --display-name "Python (${BASENAME})"
+    done
+fi
