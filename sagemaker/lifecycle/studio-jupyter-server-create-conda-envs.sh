@@ -5,13 +5,14 @@ set -euxo pipefail
 PRE_COMMIT_HOME=${HOME}/.cache/pre-commit
 KERNELS_DIR=${HOME}/.kernels
 
-if [ -f $HOME/.micromamba/bashrc-studio.sh ]; then
-  source $HOME/.micromamba/bashrc-studio.sh
+if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
+  ln -sf $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ~/.bash_profile
+  source ~/.bash_profile
 
   micromamba config append channels conda-forge
   micromamba config append channels defaults
-  micromamba config append envs_dirs $HOME/.conda/envs
   micromamba config append envs_dirs $KERNELS_DIR
+  micromamba config append envs_dirs $HOME/.conda/envs
 
   ################### Create conda environments #######################
   KERNEL_NAME="smg-re"
