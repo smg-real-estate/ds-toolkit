@@ -42,27 +42,33 @@ EOL
 chmod +x ~/.aws-credential-helper.py
 GIT_USER=$GIT_USER
 GIT_EMAIL=$GIT_EMAIL
-function git_config() {
-  git config --global $1 "$2"
-}
-git_config credential.helper ~/.aws-credential-helper.py
-git_config user.email "${GIT_EMAIL}"
-git_config user.name "${GIT_USER}"
-git_config pull.rebase true
-git_config alias.a add
-git_config alias.b branch
-git_config alias.c commit
-git_config alias.cl clone
-git_config alias.co checkout
-git_config alias.cp cherry-pick
-git_config alias.m merge
-git_config alias.p push --follow-tags
-git_config alias.pu pull
-git_config alias.r reset
-git_config alias.s status
-git_config alias.force-push push --force-with-lease
-git_config alias.fp force-push
-git_config init.defaultbranch main
+cat > ~/.gitconfig <<EOL
+[credential]
+        helper = /home/sagemaker-user/.aws-credential-helper.py
+[user]
+        email = ${GIT_EMAIL}
+        name = ${GIT_USER}
+[pull]
+        rebase = true
+[alias]
+        a = add
+        b = branch
+        c = commit
+        cl = clone
+        co = checkout
+        cp = cherry-pick
+        m = merge
+        p = push --follow-tags
+        pu = pull
+        r = reset
+        s = status
+        force-push = push --force-with-lease
+        fp = force-push
+[init]
+        defaultbranch = main
+[push]
+        autoSetupRemote = true
+EOL
 
 ##################### Install micromamba ############################
 PRE_COMMIT_HOME=${HOME}/.cache/pre-commit
