@@ -6,7 +6,7 @@ PRE_COMMIT_HOME=${HOME}/.cache/pre-commit
 KERNELS_DIR=${HOME}/.kernels
 
 if [ -f $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ]; then
-  ln -sf $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh ~/.bash_profile
+  cat $HOME/ds-toolkit/sagemaker/lifecycle/bashrc-studio.sh > ~/.bash_profile
   source ~/.bash_profile
 
   micromamba config prepend channels conda-forge
