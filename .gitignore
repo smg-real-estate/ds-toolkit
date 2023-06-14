@@ -1,2 +1,3 @@
 .ipynb_checkpoints
 **/*.jupyterlab-workspace
+dist

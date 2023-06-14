@@ -1,0 +1,194 @@
+{
+  "id": "3003488406",
+  "listerBranding": {
+    "adActive": false,
+    "address": {
+      "country": "CH",
+      "locality": "Wallisellen",
+      "postalCode": "8304",
+      "street": "Husacherstrasse 3"
+    },
+    "isPremiumBranding": true,
+    "isQualityPartner": false,
+    "legalName": "Privera AG",
+    "logoUrl": "https://media2.homegate.ch/t_customer_logo/logos/l_privhg014_v1.jpg",
+    "name": "Vermietungsmanagement",
+    "profilePageUrlKeyword": "privera-ag"
+  },
+  "listing": {
+    "address": {
+      "country": "CH",
+      "geoCoordinates": {
+        "accuracy": "HIGH",
+        "latitude": 47.3813889,
+        "longitude": 8.5178733,
+        "manual": false
+      },
+      "geoDistances": [
+        {
+          "distance": -7067.406333120223,
+          "geoTag": "geo-canton-zurich"
+        },
+        {
+          "distance": -3453.357412199457,
+          "geoTag": "geo-city-zurich"
+        },
+        {
+          "distance": -340.46606240707405,
+          "geoTag": "geo-citydistrict-aussersihl-hard"
+        },
+        {
+          "distance": -173.82499071265642,
+          "geoTag": "geo-citydistrict-hard"
+        },
+        {
+          "distance": -399.3798043738267,
+          "geoTag": "geo-cityregion-kreis-4"
+        },
+        {
+          "distance": -21514.399654416164,
+          "geoTag": "geo-country-switzerland"
+        },
+        {
+          "distance": -3628.6887637636396,
+          "geoTag": "geo-region-zurich"
+        },
+        {
+          "distance": -3453.357412199457,
+          "geoTag": "geo-zipcode-8000"
+        },
+        {
+          "distance": -340.46606240707405,
+          "geoTag": "geo-zipcode-8004"
+        }
+      ],
+      "geoTags": [
+        "geo-canton-zurich",
+        "geo-city-zurich",
+        "geo-citydistrict-aussersihl-hard",
+        "geo-citydistrict-hard",
+        "geo-cityregion-kreis-4",
+        "geo-country-switzerland",
+        "geo-region-zurich",
+        "geo-zipcode-8000",
+        "geo-zipcode-8004"
+      ],
+      "locality": "Z\u00c3\u00bcrich",
+      "postalCode": "8004",
+      "street": "Hohlstrasse 190/192"
+    },
+    "availableFrom": "2023-09-14",
+    "categories": [
+      "OFFICE"
+    ],
+    "characteristics": {
+      "floor": 4,
+      "hasElevator": true,
+      "hasGarage": true,
+      "totalFloorSpace": 395
+    },
+    "contactForm": {
+      "deliveryFormat": "REM",
+      "size": "NO_ADDRESS"
+    },
+    "externalIds": {
+      "displayPropertyReferenceId": "VM100.0311055.07",
+      "displayReferenceId": "VM100.0311055.07",
+      "internalReferenceId": "privhg014#07#0311055#VM100",
+      "propertyReferenceId": "privhg014#07#0311055#VM100",
+      "refHouse": "0311055",
+      "refObject": "07",
+      "refProperty": "VM100"
+    },
+    "id": "3003488406",
+    "lister": {
+      "address": {
+        "country": "CH",
+        "locality": "Wallisellen",
+        "postalCode": "8304",
+        "street": "Husacherstrasse 3"
+      },
+      "contacts": {
+        "inquiry": {
+          "givenName": "Daniel Schatz-Graf"
+        },
+        "viewing": {}
+      },
+      "id": "privhg014",
+      "legalName": "Privera AG",
+      "logoUrl": "https://media2.homegate.ch/t_customer_logo/logos/l_privhg014_v1.jpg",
+      "name": "Vermietungsmanagement",
+      "phone": "058 715 65 69",
+      "platformData": [
+        {
+          "name": "homegate",
+          "status": "ACTIVE"
+        },
+        {
+          "name": "immoscout24",
+          "status": "SUSPENDED"
+        }
+      ],
+      "website": {
+        "value": "http://www.privera.ch"
+      }
+    },
+    "localization": {
+      "de": {
+        "attachments": [
+          {
+            "file": "ff0000000007415670.jpg",
+            "type": "IMAGE",
+            "url": "https://media2.homegate.ch/listings/privhg014/3003488406/image/95dcdb895e1fd153c21d1de9b53ec9fe.jpg"
+          },
+          {
+            "file": "ff0000000007415662.jpg",
+            "type": "IMAGE",
+            "url": "https://media2.homegate.ch/listings/privhg014/3003488406/image/91a6da32aa2a463576a5f2ac4e577897.jpg"
+          }
+        ],
+        "text": {
+          "description": "... das ist das neue Motto an der Hohlstrasse 190/192 in Z\u00c3\u00bcrich. Bestens erschlossen, mitten in Z\u00c3\u00bcrich gelegen, vermieten wir befristete, voll ausgebaute B\u00c3\u00bcrofl\u00c3\u00a4chen mit flexiblen Vertragslaufzeiten. <br /><br /><b>Das Angebot:</b> <br /><br /><ul><li>Bezug per sofort oder nach Vereinbarung</li><li>Vorerst befristet bis 30.06.2027</li><li>K\u00c3\u00bcndigungsfrist von nur 6 Monaten</li></ul><b>Das Objekt:</b> <br /><br /><ul><li>395m2 ausgebaute B\u00c3\u00bcrofl\u00c3\u00a4che im 4.OG</li><li>Teamb\u00c3\u00bcros, Einzelb\u00c3\u00bcros, Meetingr\u00c3\u00a4ume, Serverraum</li><li>Voll ausgestattete K\u00c3\u00bcche</li><li>Glasfaseranschluss, Verkabelung \u00c3\u00bcber Br\u00c3\u00bcstungskanal</li><li>Teppichbodenbelag</li><li>Grossz\u00c3\u00bcgige Fensterfront</li><li>WC-Anlage im Treppenhaus</li></ul>Einstellhallenpl\u00c3\u00a4tze k\u00c3\u00b6nnen f\u00c3\u00bcr CHF 250.- / Monat dazu gemietet werden. Die Nebenkosten Akonto betragen CHF 40.-/m2 p.a. Der Hauswart ist t\u00c3\u00a4glich vor Ort und garantiert eine 1A-Betreuung der Liegenschaft und Mieter. <br /><br /><b>Die Lage:</b> <br /><br /><ul><li>450m zur Haltestelle Hardplatz / 200m zur Haltestelle G\u00c3\u00bcterbahnhof</li><li>800m Bahnhof Hardbr\u00c3\u00bccke</li><li>100m Dieci Pizza</li><li>70m Asia und Kebab Restaurant / Take away</li><li>Im Umkreis von 500m finden sich unz\u00c3\u00a4hlige weitere Restaurants und Cafes f\u00c3\u00bcr die Lunchverpflegung</li></ul>Haben wir Ihr Interesse geweckt? Vereinbaren Sie mit uns einen Besichtigungstermin, wir freuen uns auf Ihre Kontaktaufnahme. <br /><br />Die aufgef\u00c3\u00bchrten Fotos sind urheberrechtlich gesch\u00c3\u00bctzt und d\u00c3\u00bcrfen nicht von Dritten verwendet werden.",
+          "title": "In the middle of Zurich, flexible and fully developed..."
+        },
+        "urls": []
+      },
+      "primary": "de"
+    },
+    "meta": {
+      "createdAt": "2023-08-30T09:03:29.881+02:00",
+      "source": "FILSINGER",
+      "updatedAt": "2023-09-14T17:10:52.750+02:00"
+    },
+    "offerType": "RENT",
+    "platforms": [
+      "homegate",
+      "alleimmobilien",
+      "home",
+      "immostreet"
+    ],
+    "prices": {
+      "currency": "CHF",
+      "rent": {
+        "area": "M2",
+        "gross": 270,
+        "interval": "YEAR",
+        "net": 270
+      }
+    },
+    "valueAddedServices": {
+      "rank": {
+        "type": "PREMIUM"
+      }
+    },
+    "version": 15
+  },
+  "listingCard": {
+    "size": "M"
+  },
+  "listingType": {
+    "type": "PREMIUM"
+  },
+  "paused": false,
+  "remoteViewing": false
+}
