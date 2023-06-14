@@ -1,0 +1,177 @@
+{
+  "id": "3003258394",
+  "listerBranding": {
+    "adActive": false,
+    "address": {
+      "country": "CH",
+      "locality": "Ascona",
+      "postalCode": "6612",
+      "region": "TI",
+      "street": "Strada della Brima 6"
+    },
+    "isPremiumBranding": false,
+    "isQualityPartner": false,
+    "legalName": "Pellegri Real Estate Sagl",
+    "logoUrl": "https://media2.homegate.ch/t_customer_logo/logos/l_p467_v1.png",
+    "profilePageUrlKeyword": "pellegri-real-estate-sagl"
+  },
+  "listing": {
+    "address": {
+      "country": "CH",
+      "geoCoordinates": {
+        "accuracy": "HIGH",
+        "latitude": 46.1810548987987,
+        "longitude": 8.8253419498354,
+        "manual": true
+      },
+      "geoDistances": [
+        {
+          "distance": -8993.271586503797,
+          "geoTag": "geo-canton-ticino"
+        },
+        {
+          "distance": -142.70843304632973,
+          "geoTag": "geo-city-minusio"
+        },
+        {
+          "distance": -8993.271586503797,
+          "geoTag": "geo-country-switzerland"
+        },
+        {
+          "distance": -3221.900799228266,
+          "geoTag": "geo-region-locarno"
+        },
+        {
+          "distance": -142.70843304632973,
+          "geoTag": "geo-zipcode-6648"
+        }
+      ],
+      "geoTags": [
+        "geo-canton-ticino",
+        "geo-city-minusio",
+        "geo-country-switzerland",
+        "geo-region-locarno",
+        "geo-zipcode-6648"
+      ],
+      "locality": "Minusio",
+      "postalCode": "6648",
+      "region": "TI",
+      "street": "Via San Gottardo 106A"
+    },
+    "availableFrom": "2022-10-09",
+    "categories": [
+      "APARTMENT",
+      "FURNISHED_FLAT"
+    ],
+    "characteristics": {
+      "arePetsAllowed": true,
+      "floor": 4,
+      "hasBalcony": true,
+      "hasCableTv": true,
+      "hasElevator": true,
+      "hasNiceView": true,
+      "hasParking": true,
+      "isQuiet": true,
+      "livingSpace": 40,
+      "numberOfRooms": 1.5,
+      "yearBuilt": 1980
+    },
+    "contactForm": {
+      "deliveryFormat": "NORMAL",
+      "size": "WITH_ADDRESS"
+    },
+    "externalIds": {
+      "displayPropertyReferenceId": "i5lzy.h020p",
+      "internalReferenceId": "p467#i5lzy.h020p##",
+      "propertyReferenceId": "p467#i5lzy.h020p##",
+      "refObject": "i5lzy.h020p"
+    },
+    "id": "3003258394",
+    "lister": {
+      "address": {
+        "country": "CH",
+        "locality": "Ascona",
+        "postalCode": "6612",
+        "region": "TI",
+        "street": "Strada della Brima 6"
+      },
+      "contacts": {
+        "inquiry": {
+          "givenName": "Enea Pellegri"
+        },
+        "viewing": {}
+      },
+      "id": "p467",
+      "immoscoutId": "1113431",
+      "legalName": "Pellegri Real Estate Sagl",
+      "logoUrl": "https://media2.homegate.ch/t_customer_logo/logos/l_p467_v1.png",
+      "phone": "+41 78 907 17 02",
+      "platformData": [
+        {
+          "name": "homegate",
+          "status": "ACTIVE"
+        },
+        {
+          "name": "immoscout24",
+          "status": "ACTIVE"
+        }
+      ],
+      "website": {
+        "value": "http://www.idealiving.ch"
+      }
+    },
+    "localization": {
+      "de": {
+        "attachments": [
+          {
+            "file": "322eb46858.jpg",
+            "type": "IMAGE",
+            "url": "https://media2.homegate.ch/listings/p467/3003258394/image/b63c212b981cdf51baf63d64d77f6379.jpg"
+          }
+        ],
+        "text": {
+          "description": "<p><strong>Affittiamo monolocale arredato sito all'ultimo piano di una residenza a Minusio, in zona tranquilla, soleggiata e con vista aperta.</strong></p><p>Il monolocale dispone di bella terrazza coperta ed \u00c3\u00a8 cos\u00c3\u00ac composto:</p><p>soggiorno/pranzo, piccola cucina, bagno con vasca (ristrutturato) e letto doppio a scomparsa.</p><p>L'appartamento dispone di cantina e posto auto esterno.</p><p>La lavanderia \u00c3\u00a8 in comune ed utilizzabile con tessera ricaricabile.</p><p>Disponibile da subito.</p><p>1 settimana CHF 700</p><p>2 settimane CHF 1400</p><p>3 settimane CHF 2100</p><p>4 settimane CHF 2500</p><p>Costo di pulizia forfettario 100 CHF/soggiorno</p><p><strong>Wir vermieten ein m\u00c3\u00b6bliertes Studio-Apartment im obersten Stockwerk einer Residenz in Minusio, in einer ruhigen, sonnigen Gegend mit offenem Blick.</strong></p><p>Das Studio hat eine sch\u00c3\u00b6ne \u00c3\u00bcberdachte Terrasse und ist wie folgt aufgeteilt:</p><p>Wohn-/Esszimmer, kleine K\u00c3\u00bcche, Badezimmer mit Badewanne (renoviert) und ausklappbarem Doppelbett.</p><p>Die Wohnung ist unterkellert und hat einen Au\u00c3\u0178enparkplatz.</p><p>Die Waschk\u00c3\u00bcche wird gemeinsam genutzt und kann mit einer wiederaufladbaren Karte benutzt werden.</p><p>Sofort verf\u00c3\u00bcgbar.</p><p>1 Woche CHF 700</p><p>2 Wochen CHF 1400</p><p>3 Wochen CHF 2100</p><p>4 Wochen CHF 2500</p><p>Reinigungsgeb\u00c3\u00bchr pauschal 100 CHF/Tag</p>",
+          "title": "Grazioso monolocale arredato"
+        },
+        "urls": [
+          {
+            "title": "Pellegri Real Estate",
+            "type": "LINK",
+            "value": "https://www.pellegrirealestate.ch/"
+          }
+        ]
+      },
+      "primary": "de"
+    },
+    "meta": {
+      "createdAt": "2023-07-03T15:53:31.059+02:00",
+      "source": "BUSINESS_INSERTION_FUNNEL",
+      "updatedAt": "2023-07-14T13:56:22.699+02:00"
+    },
+    "offerType": "RENT",
+    "platforms": [
+      "homegate",
+      "home",
+      "alleimmobilien",
+      "immostreet"
+    ],
+    "prices": {
+      "buy": {},
+      "currency": "CHF",
+      "rent": {
+        "gross": 700,
+        "interval": "WEEK"
+      }
+    },
+    "valueAddedServices": {},
+    "version": 11
+  },
+  "listingCard": {
+    "size": "S"
+  },
+  "listingType": {
+    "type": "STANDARD"
+  },
+  "paused": false,
+  "remoteViewing": false
+}
