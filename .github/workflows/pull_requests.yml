@@ -11,7 +11,7 @@ permissions:
 jobs:
   dependencies:
     name: Poetry
-    uses: ./.github/workflows/poetry.yml
+    uses: smg-real-estate/public-workflows/.github/workflows/poetry.yml@v1
     with:
       image_name: smgrealestate/python-cdk:python-3.10
       home: /home/python
