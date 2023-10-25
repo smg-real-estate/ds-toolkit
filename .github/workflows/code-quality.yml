@@ -1,8 +1,5 @@
 name: Code Quality
-on:
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 permissions:
   id-token: write
