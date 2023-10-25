@@ -14,7 +14,9 @@ jobs:
     uses: smg-real-estate/public-workflows/.github/workflows/poetry.yml@v1
     with:
       image_name: smgrealestate/python-cdk:python-3.10
+      poetry_scripts: '["poe lint-all", "poe test-unit"]'
       home: /home/python
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

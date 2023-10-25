@@ -28,7 +28,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-test-unit = "python3 -m pytest --color=yes ./tests"
+test-unit = "python3 -m pytest --color=yes --cov --cov-report xml ./tests"
 format = "black ."
 lint-all = "pre-commit run --all-files"
 
@@ -59,3 +59,9 @@ line_length = 79
 [tool.ruff]
 line-length = 79
 target-version = "py39"
+
+[tool.coverage.run]
+branch = true
+omit = [
+    "tests/*"
+]
