@@ -1,3 +1,5 @@
 .ipynb_checkpoints
 **/*.jupyterlab-workspace
 dist
+.coverage
+coverage.xml
