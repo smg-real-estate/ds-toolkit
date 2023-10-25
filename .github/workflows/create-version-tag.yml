@@ -1,0 +1,31 @@
+name: Create version tag from version in pyproject.toml
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - pyproject.toml
+      - .github/workflows/create-version-tag.yml
+
+permissions:
+  contents: write
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: version
+        run: |
+          VERSION="$(grep -F version pyproject.toml| cut -d '=' -f2 | xargs)"
+          echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - uses: rickstaa/action-create-tag@v1
+        id: "tag_create"
+        with:
+          tag: "v${{ steps.version.outputs.tag }}"
+          tag_exists_error: false
+          message: "Latest release"
+
+      - run: |
+          echo "Tag already present: ${{ steps.tag_create.outputs.tag_exists }}"
