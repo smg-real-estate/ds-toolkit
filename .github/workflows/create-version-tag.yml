@@ -15,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - id: version
         run: |
           VERSION="$(grep '^version =' pyproject.toml| cut -d '=' -f2 | xargs)"
           echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
-
-      - id: debug
-        run: git tag -l "v${{ steps.version.outputs.tag }}"
 
       - uses: rickstaa/action-create-tag@v1
         id: "tag_create"
