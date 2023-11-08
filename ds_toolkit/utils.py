@@ -1,6 +1,7 @@
-from datadog import api, initialize
+from datadog import initialize
+from datadog.api.metrics import Metric
 
 
 def send_datadog_metric(options, *args, **kwargs):
     initialize(**options)
-    api.Metric.send(*args, **kwargs)
+    Metric.send(*args, **kwargs)
