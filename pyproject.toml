@@ -8,7 +8,7 @@ readme = "README.md"
 packages = [{include = "ds_toolkit"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.11"
 numpy = "^1.24.0"
 datadog = "^0.47.0"
 scikit-learn = "^1.3.0"
