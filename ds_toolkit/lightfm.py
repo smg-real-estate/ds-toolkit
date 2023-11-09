@@ -254,5 +254,11 @@ features_to_tags_pipeline = make_pipeline(
     YearTransformer(),
     FeaturesIntoTagsTransformer(),
 )
+"""
+# Build transofrmation pipeline
+# - clean some data (delete outliers, suspicious values)
+# - transform features into tags
+# - create a list with all unique tags
+"""
 
 features_to_list_with_tags_pipeline = make_pipeline(TagsListTransformer())
