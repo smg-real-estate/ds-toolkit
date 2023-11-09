@@ -30,7 +30,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-test-unit = "python3 -m pytest --color=yes --cov --cov-report xml ./tests"
+test-unit = "python3 -m pytest --color=yes --cov=ds_toolkit --cov-report xml ./tests"
 format = "black ."
 lint-all = "pre-commit run --all-files"
 
