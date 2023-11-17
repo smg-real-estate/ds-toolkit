@@ -4,12 +4,18 @@ from sklearn.pipeline import make_pipeline
 
 from .recommendations_utils import isnull
 
-__all__ = ["features_to_tags_pipeline", "features_to_list_with_tags_pipeline"]
+__all__ = [
+    "features_to_tags_pipeline_buy",
+    "features_to_tags_pipeline_rent",
+    "features_to_list_with_tags_pipeline",
+]
 
 
 class RentPriceTransformer(BaseEstimator, TransformerMixin):
     """
-    Sets price to nan if it is above 99th quantile for every category.
+    Sets price to None if it is above 99th quantile for almost all categories.
+    For APPT and HOUSE categories sets price to nan if it is above 30'000 and 60'000 respectively.
+    Those prices are much higher than 99th quantile. It is done to avoid deleting too expensive listings from some expensive cantons and municipalities.
     """
 
     def __init__(self):
@@ -47,7 +53,7 @@ class RentPriceTransformer(BaseEstimator, TransformerMixin):
 
 class BuyPriceTransformer(BaseEstimator, TransformerMixin):
     """
-    Sets price to nan if it is above 99th quantile for every category.
+    Sets price to None if it is above 99th quantile for every category.
     """
 
     def __init__(self):
@@ -71,7 +77,8 @@ class BuyPriceTransformer(BaseEstimator, TransformerMixin):
 
 class RentSpaceTransformer(BaseEstimator, TransformerMixin):
     """
-    Sets space to nan if it is suspicious high or low.
+    Sets space to None if it is suspiciously low (equals or lower than 1 sqm).
+    Only PARK and INDUS DISPLAY_WINDOW categories are allowed to have such space.
     """
 
     def __init__(self):
@@ -100,7 +107,10 @@ class RentSpaceTransformer(BaseEstimator, TransformerMixin):
 
 class BuySpaceTransformer(BaseEstimator, TransformerMixin):
     """
-    Sets space to nan if it is suspicious high or low.
+    Sets space to None for some categories if it is suspiciously high or low:
+    - APPT space is not allowed to be > 1000 or <= 1
+    - PARK space is not allowed to be > 100
+    - GASTRO, HOUSE spaces are not allowed to be <= 1
     """
 
     def __init__(self):
@@ -137,7 +147,7 @@ class BuySpaceTransformer(BaseEstimator, TransformerMixin):
 
 class FloorTransformer(BaseEstimator, TransformerMixin):
     """
-    Sets floor to nan if it is suspicious high.
+    Sets floor to None if it is suspiciously high.
     The highest building in Switzerland has 50 floors.
     """
 
@@ -198,8 +208,9 @@ class YearTransformer(BaseEstimator, TransformerMixin):
 
 class FeaturesIntoTagsTransformer(BaseEstimator, TransformerMixin):
     """
-    Transforms every features of every listing from pandas DataFrame
-    into a list of tuples (listing_id, features_list)
+    Transforms every feature of every listing from pandas DataFrame
+    into a list of tags - tuples (listing_id, features_list).
+    These tags are needed for the LightFM model and should be in the string format.
     """
 
     def __init__(self):
@@ -228,8 +239,9 @@ class FeaturesIntoTagsTransformer(BaseEstimator, TransformerMixin):
 
 class TagsListTransformer(BaseEstimator, TransformerMixin):
     """
-    Transforms all features from pandas DataFrame
-    into a list with unique features
+    Transforms all listing features from FeaturesIntoTagsTransformer
+    into a set of unique listing features.
+    This set is needed for the LightFM model.
     """
 
     def __init__(self):
@@ -247,7 +259,7 @@ class TagsListTransformer(BaseEstimator, TransformerMixin):
         return feature_set
 
 
-features_to_tags_pipeline = make_pipeline(
+features_to_tags_pipeline_buy = make_pipeline(
     BuyPriceTransformer(),
     BuySpaceTransformer(),
     FloorTransformer(),
@@ -255,10 +267,25 @@ features_to_tags_pipeline = make_pipeline(
     FeaturesIntoTagsTransformer(),
 )
 """
-# Build transofrmation pipeline
-# - clean some data (delete outliers, suspicious values)
+# Build transofrmation pipeline for BUY listings:
+# - clean some data (see Transformers' docstrings)
 # - transform features into tags
-# - create a list with all unique tags
+# - create a set with all unique feature tags
+"""
+
+
+features_to_tags_pipeline_rent = make_pipeline(
+    RentPriceTransformer(),
+    RentSpaceTransformer(),
+    FloorTransformer(),
+    YearTransformer(),
+    FeaturesIntoTagsTransformer(),
+)
+"""
+# Build transofrmation pipeline for RENT listings:
+# - clean some data (see Transformers' docstrings)
+# - transform features into tags
+# - create a set with all unique feature tags
 """
 
 features_to_list_with_tags_pipeline = make_pipeline(TagsListTransformer())
