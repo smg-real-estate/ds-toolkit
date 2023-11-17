@@ -77,7 +77,7 @@ class BuyPriceTransformer(BaseEstimator, TransformerMixin):
 
 class RentSpaceTransformer(BaseEstimator, TransformerMixin):
     """
-    Sets space to None if it is suspicious low (equals or lower than 1 sqm).
+    Sets space to None if it is suspiciously low (equals or lower than 1 sqm).
     Only PARK and INDUS DISPLAY_WINDOW categories are allowed to have such space.
     """
 
@@ -107,7 +107,7 @@ class RentSpaceTransformer(BaseEstimator, TransformerMixin):
 
 class BuySpaceTransformer(BaseEstimator, TransformerMixin):
     """
-    Sets space to None for some categories if it is suspicious high or low:
+    Sets space to None for some categories if it is suspiciously high or low:
     - APPT space is not allowed to be > 1000 or <= 1
     - PARK space is not allowed to be > 100
     - GASTRO, HOUSE spaces are not allowed to be <= 1
