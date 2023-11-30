@@ -2,6 +2,27 @@ import pickle
 from typing import Any, Optional
 
 import numpy as np
+from geopy.distance import distance
+
+
+def is_acceptable_recommendation(
+    source_listing: dict, max_geo_distance: float, target_listing: dict
+):
+    source_categories = set(source_listing["CATEGORIES"].split(","))
+    target_categories = set(target_listing["CATEGORIES"].split(","))
+    geo_dist = distance(
+        (source_listing["LATITUDE"], source_listing["LONGITUDE"]),
+        (
+            target_listing["LATITUDE"],
+            target_listing["LONGITUDE"],
+        ),
+    ).km
+
+    return (
+        target_listing["IS_ACTIVE"]
+        and geo_dist <= max_geo_distance
+        and (len(target_categories.intersection(source_categories)) > 0)
+    )
 
 
 def get_cosine_similarity(source_vector, item_representations):
