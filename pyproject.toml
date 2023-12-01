@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ds-toolkit"
-version = "0.2.4"
+version = "0.3.0"
 description = "Utility package for SMG Real Estate DS team"
 authors = ["Dmytro Yurchenko <dmytro.yurchenko@swissmarketplace.group>"]
 license = "PROPRIETARY"
@@ -8,6 +8,8 @@ readme = "README.md"
 packages = [{include = "ds_toolkit"}]
 
 [tool.poetry.dependencies]
+botocore = "^1.31.0"
+geopy = "^2.4.0"
 python = ">=3.8,<3.11"
 numpy = "^1.24.0"
 datadog = "^0.47.0"

@@ -1,4 +1,5 @@
 import json
+from unittest import mock
 
 import numpy as np
 
@@ -11,9 +12,53 @@ from ds_toolkit.recommendations_utils import (
     flatten_hgrets,
     get_category_code,
     get_recommendations_ordered_by_distance,
+    is_acceptable_recommendation,
     isnull,
     normalise_price,
 )
+
+
+@mock.patch("ds_toolkit.recommendations_utils.distance")
+def test_is_acceptable_recommendation(mock_distance):
+    mock_distance.return_value = lambda: None
+    mock_distance.return_value.km = 5.0
+
+    source_listing = {
+        "LISTING_ID": 1,
+        "LATITUDE": 47.3769,
+        "LONGITUDE": 8.5417,
+        "CATEGORIES": "HOUSE,SINGLE_HOUSE",
+        "IS_ACTIVE": True,
+    }
+
+    target_listing = {
+        "LISTING_ID": 2,
+        "LATITUDE": 43.3769,
+        "LONGITUDE": 8.5417,
+        "CATEGORIES": "HOUSE",
+        "IS_ACTIVE": True,
+    }
+
+    assert (
+        is_acceptable_recommendation(source_listing, 10.0, target_listing)
+        is True
+    )
+    assert (
+        is_acceptable_recommendation(
+            source_listing, 10.0, {**target_listing, "IS_ACTIVE": False}
+        )
+        is False
+    )
+    assert (
+        is_acceptable_recommendation(
+            source_listing, 10.0, {**target_listing, "CATEGORIES": "GARAGE"}
+        )
+        is False
+    )
+    assert (
+        is_acceptable_recommendation(source_listing, 3.0, target_listing)
+        is False
+    )
 
 
 def test_get_recommendations_ordered_by_distance():
