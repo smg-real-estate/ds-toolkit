@@ -46,8 +46,6 @@ def dump_object_to_s3(
     elif format == ObjectFormat.JSON:
         buff = StringIO()
         json.dump(obj, buff)
-    else:
-        raise ValueError(f"Unknown format: {format}")
     buff.seek(0)
 
     client.put_object(
