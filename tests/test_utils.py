@@ -1,6 +1,7 @@
 from unittest import mock
 
 from ds_toolkit.utils import (
+    ObjectFormat,
     dump_object_to_s3,
     load_object_from_s3,
     send_datadog_metric,
@@ -49,6 +50,29 @@ def test_dump_object_to_s3(mock_bytesio, mock_dumps):
     )
 
 
+@mock.patch("ds_toolkit.utils.json.dump")
+@mock.patch("ds_toolkit.utils.StringIO")
+def test_dump_json_object_to_s3(mock_stringio, mock_dump):
+    mock_client = mock.MagicMock()
+    mock_obj = mock.MagicMock()
+    mock_bucket = mock.MagicMock()
+    mock_key = mock.MagicMock()
+    mock_buff = mock.MagicMock()
+    mock_stringio.return_value = mock_buff
+    mock_dump.return_value = "pickled_obj"
+    mock_buff.read.return_value = "pickled_obj"
+
+    dump_object_to_s3(
+        mock_client, mock_obj, mock_bucket, mock_key, ObjectFormat.JSON
+    )
+    mock_stringio.assert_called_once_with()
+    mock_dump.assert_called_once_with(mock_obj, mock_buff)
+    mock_buff.seek.assert_called_once_with(0)
+    mock_client.put_object.assert_called_once_with(
+        Body="pickled_obj", Bucket=mock_bucket, Key=mock_key
+    )
+
+
 @mock.patch("ds_toolkit.utils.pickle.loads")
 def test_load_object_from_s3(mock_loads):
     mock_client = mock.MagicMock()
@@ -61,6 +85,29 @@ def test_load_object_from_s3(mock_loads):
 
     assert (
         load_object_from_s3(mock_client, mock_bucket, mock_key)
+        == "unpickled_obj"
+    )
+    mock_client.get_object.assert_called_once_with(
+        Bucket=mock_bucket, Key=mock_key
+    )
+    mock_obj.read.assert_called_once_with()
+    mock_loads.assert_called_once_with("pickled_obj")
+
+
+@mock.patch("ds_toolkit.utils.json.loads")
+def test_load_json_object_from_s3(mock_loads):
+    mock_client = mock.MagicMock()
+    mock_bucket = mock.MagicMock()
+    mock_key = mock.MagicMock()
+    mock_obj = mock.MagicMock()
+    mock_client.get_object.return_value = {"Body": mock_obj}
+    mock_obj.read.return_value = "pickled_obj"
+    mock_loads.return_value = "unpickled_obj"
+
+    assert (
+        load_object_from_s3(
+            mock_client, mock_bucket, mock_key, ObjectFormat.JSON
+        )
         == "unpickled_obj"
     )
     mock_client.get_object.assert_called_once_with(
