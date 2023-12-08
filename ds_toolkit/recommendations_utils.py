@@ -104,7 +104,7 @@ def deep_get(input_dict, object_path, default_value=None, separator="."):
     return _deep_get(input_dict, object_path.split(separator))
 
 
-def filter_hgrets(listing_info):
+def get_filter_features(listing_info):
     """
     Returns a smaller subset of the listing info, containing only the fields:
     - id as listing_id
@@ -112,11 +112,9 @@ def filter_hgrets(listing_info):
     - offerType as listing_offertype
     """
     return {
-        "listing_id": deep_get(listing_info, "listing.id"),
-        "listing_address_country": deep_get(
-            listing_info, "listing.address.country"
-        ),
-        "listing_offertype": deep_get(listing_info, "listing.offerType"),
+        "LISTING_ID": deep_get(listing_info, "listing.id"),
+        "COUNTRY": deep_get(listing_info, "listing.address.country"),
+        "OFFERTYPE": deep_get(listing_info, "listing.offerType"),
     }
 
 
@@ -263,7 +261,7 @@ def normalise_price(listing_info):
         return None
 
 
-def flatten_hgrets(listing_info):
+def get_listing_features(listing_info):
     """
     Returns a smaller subset of the listing info, containing only the fields:
     - id as LISTING_ID

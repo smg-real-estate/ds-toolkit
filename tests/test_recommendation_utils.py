@@ -8,9 +8,9 @@ from ds_toolkit.recommendations_utils import (
     convert_to_float,
     convert_to_int,
     deep_get,
-    filter_hgrets,
-    flatten_hgrets,
     get_category_code,
+    get_filter_features,
+    get_listing_features,
     get_recommendations_ordered_by_distance,
     is_acceptable_recommendation,
     isnull,
@@ -86,14 +86,14 @@ def test_deep_get():
     assert deep_get({"a": {"b": 10}}, "c", "D") == "D"
 
 
-def test_filter_hgrets():
+def test_get_filter_features():
     with open("tests/listing.json", "r") as listing_file:
         listing_data = json.loads(listing_file.read())
-    filter_data = filter_hgrets(listing_data)
+    filter_data = get_filter_features(listing_data)
 
-    assert filter_data["listing_id"] == "3000209985"
-    assert filter_data["listing_address_country"] == "CH"
-    assert filter_data["listing_offertype"] == "BUY"
+    assert filter_data["LISTING_ID"] == "3000209985"
+    assert filter_data["COUNTRY"] == "CH"
+    assert filter_data["OFFERTYPE"] == "BUY"
 
 
 def test_isnull():
@@ -146,10 +146,10 @@ def test_normalise_price():
     assert normalise_price(listing_data) == 3033.33
 
 
-def test_flatten_hgrets():
+def test_get_listing_features():
     with open("tests/listing.json", "r") as listing_file:
         listing_data = json.loads(listing_file.read())
-    flat_data = flatten_hgrets(listing_data)
+    flat_data = get_listing_features(listing_data)
 
     assert flat_data["LISTING_ID"] == 3000209985
     assert flat_data["PRICE"] == 578000.0
