@@ -8,6 +8,14 @@ from geopy.distance import distance
 def is_acceptable_recommendation(
     source_listing: dict, max_geo_distance: float, target_listing: dict
 ):
+    """
+    Function checks if a target listing is an acceptable recommendation.
+
+    :param source_listing: listing the recommendation is needed for.
+    :param max_geo_distance: maximum distance in km between the source and target listings.
+    :param target_listing: listing to check if it is an acceptable recommendation.
+    :return: True if the target listing is an acceptable recommendation, False otherwise.
+    """
     source_categories = set(source_listing["CATEGORIES"].split(","))
     target_categories = set(target_listing["CATEGORIES"].split(","))
     geo_dist = distance(
@@ -29,7 +37,10 @@ def get_cosine_similarity(source_vector, item_representations):
     """
     Function calculates cosine similarity between a source vector
     and a matrix aka item representations.
-    Returns a vector of similarity scores with all items in the matrix.
+
+    :param source_vector: vector of features of a listing.
+    :param item_representations: matrix of item representations.
+    :return: vector of similarity scores with all items in the matrix.
     """
     sim = item_representations.dot(source_vector)
     item_norms = np.linalg.norm(item_representations, axis=1)
@@ -43,8 +54,9 @@ def filter_scores_below_treshold(scores, threshold=0.8):
     Function filters out similarity scores below the treshold.
     Default threshold is 0.8.
 
-    Returns a list of indices of the most similar items in
-    descending order without the first item (the item itself).
+    :param scores: vector of similarity scores with all items in the matrix.
+    :param threshold: similarity score threshold.
+    :return: list of indices of the most similar items in descending order.
     """
     (idx,) = np.where(scores > threshold)
     return idx[np.argsort(-scores[idx])][1:]
@@ -54,7 +66,6 @@ def merge_dicts(*dict_args):
     """
     Given any number of dicts, shallow copy and merge into a new dict,
     precedence goes to key value pairs in latter dicts.
-    Code stolen from: https://stackoverflow.com/a/26853961
     """
     result = {}
     for dictionary in dict_args:
@@ -66,10 +77,13 @@ def get_recommendations_ordered_by_distance(
     model_id_to_ids, listing_ids, reverse=False
 ):
     """
-    merge recommendations for each listing
-    ordering is done using distance to corresponding listing
-    the final list is deduplicated
-    return list of ids
+    Merge recommendations for each listing, sort them by distance and
+    make sure the final list is deduplicated.
+
+    :param model_id_to_ids: dictionary of listing ids and their recommendations.
+    :param listing_ids: list of listing ids.
+    :param reverse: boolean indicating if the list should be reversed.
+    :return: list of listing ids ordered by distance.
     """
     recommended_listing = []
     for listing_id in listing_ids:
@@ -90,6 +104,12 @@ def deep_get(input_dict, object_path, default_value=None, separator="."):
     path. If the path does not exist, the default value is returned.
     By default, the path components are separated by a dot, but this can be
     changed by specifying the separator parameter.
+
+    :param input_dict: The dictionary to perform the deep get on.
+    :param object_path: The path to the value to be returned.
+    :param default_value: The default value to be returned if the path does not exist.
+    :param separator: The separator used to split the path into components.
+    :return: The value at the specified path, or the default value if the path does not exist.
     """
 
     def _deep_get(d, path_components):
@@ -102,20 +122,6 @@ def deep_get(input_dict, object_path, default_value=None, separator="."):
                 return default_value
 
     return _deep_get(input_dict, object_path.split(separator))
-
-
-def get_filter_features(listing_info):
-    """
-    Returns a smaller subset of the listing info, containing only the fields:
-    - id as listing_id
-    - address.country as listing_address_country
-    - offerType as listing_offertype
-    """
-    return {
-        "LISTING_ID": deep_get(listing_info, "listing.id"),
-        "COUNTRY": deep_get(listing_info, "listing.address.country"),
-        "OFFERTYPE": deep_get(listing_info, "listing.offerType"),
-    }
 
 
 def isnull(value: Any) -> bool:
@@ -263,48 +269,26 @@ def normalise_price(listing_info):
 
 def get_listing_features(listing_info):
     """
-    Returns a smaller subset of the listing info, containing only the fields:
-    - id as LISTING_ID
-    - prices.rent.gross as PRICE
-    - characteristics.livingSpace as SPACE
-    - characteristics.totalFloorSpace as FLOORSPACE
-    - characteristics.singleFloorSpace as SINGLEFLOORSPACE
-    - characteristics.lotSize as LOTSIZE
-    - characteristics.numberOfRooms as NUMBEROFROOMS
-    - characteristics.floor as FLOOR
-    - characteristics.numberOfFloors as NUMBEROFFLOORS
-    - characteristics.yearBuilt as YEARBUILT
-    - characteristics.arePetsAllowed as AREPETSALLOWED
-    - characteristics.hasElevator as HASELEVATOR
-    - characteristics.hasParking as HASPARKING
-    - characteristics.hasGarage as HASGARAGE
-    - characteristics.hasNiceView as HASNICEVIEW
-    - characteristics.hasSteamer as HASSTEAMER
-    - characteristics.hasWashingMachine as HASWASHINGMACHINE
-    - characteristics.hasTumbleDryer as HASTUMBLEDRYER
-    - characteristics.hasCableTv as HASCABLETV
-    - characteristics.hasFlatSharingCommunity as HASFLATSHARINGCOMMUNITY
-    - characteristics.isChildFriendly as ISCHILDFRIENDLY
-    - characteristics.isRefurbished as ISREFURBISHED
-    - characteristics.yearLastRenovated as YEARLASTRENOVATED
-    - characteristics.isWheelchairAccessible as ISWHEELCHAIRACCESSIBLE
-    - characteristics.isMinergieCertified as ISMINERGIECERTIFIED
-    - characteristics.isMinergieGeneral as ISMINERGIEGENERAL
-    - characteristics.isNewBuilding as ISNEWBUILDING
-    - characteristics.isOldBuilding as ISOLDBUILDING
-    - characteristics.isGroundFloor as ISGROUNDFLOOR
-    - characteristics.hasAttic as HASATTIC
-    - characteristics.hasBalcony as HASBALCONY
-    - characteristics.hasGardenShed as HASGARDENSHED
-    - characteristics.hasSwimmingPool as HASSWIMMINGPOOL
-    - characteristics.hasFireplace as HASFIREPLACE
-    - address.postalCode as POSTALCODE
-    - address.region as CANTON
-    - categories as CATEGORIES
-    - categories[0] as CATEGORY_CODE
+    Returns a dictionary containing the features of a listing needed for
+    recommendation inference using LightFM model.
+
+    :param listing_info: The listing info dictionary in HgRets schema.
+    :return: A dictionary containing the features of a listing.
     """
+    categories = deep_get(listing_info, "listing.categories", [])
     return {
         "LISTING_ID": convert_to_int(deep_get(listing_info, "listing.id")),
+        "CANTON": deep_get(listing_info, "listing.address.region"),
+        "CATEGORIES": ",".join(categories),
+        "CATEGORY_CODE": category_to_code.get(categories[0], None),
+        "COUNTRY": deep_get(listing_info, "listing.address.country"),
+        "OFFERTYPE": deep_get(listing_info, "listing.offerType"),
+        "LATITUDE": convert_to_float(
+            deep_get(listing_info, "listing.address.geoCoordinates.latitude")
+        ),
+        "LONGITUDE": convert_to_float(
+            deep_get(listing_info, "listing.address.geoCoordinates.longitude")
+        ),
         "PRICE": normalise_price(listing_info),
         "SPACE": convert_to_float(
             deep_get(listing_info, "listing.characteristics.livingSpace")
@@ -402,13 +386,6 @@ def get_listing_features(listing_info):
         ),
         "POSTALCODE": convert_to_int(
             deep_get(listing_info, "listing.address.postalCode")
-        ),
-        "CANTON": deep_get(listing_info, "listing.address.region"),
-        "CATEGORIES": ",".join(
-            deep_get(listing_info, "listing.categories", [])
-        ),
-        "CATEGORY_CODE": get_category_code(
-            deep_get(listing_info, "listing.categories", [])[0]
         ),
     }
 
@@ -559,15 +536,12 @@ category_to_code = {
 }
 
 
-def get_category_code(category: Any) -> str:
-    category = category.split(",")[0]
-    category_code = category_to_code[category]
-    return category_code
-
-
 def load_pickle(path: str) -> Any:
     """
     Loads a pickle from a file at a given path.
+
+    :param path: The path to the pickle file.
+    :return: The object loaded from the pickle file.
     """
     with open(path, "rb") as pickle_file:
         return pickle.load(pickle_file)
