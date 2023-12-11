@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ds-toolkit"
-version = "1.0.0"
+version = "2.0.0"
 description = "Utility package for SMG Real Estate DS team"
 authors = ["Dmytro Yurchenko <dmytro.yurchenko@swissmarketplace.group>"]
 license = "PROPRIETARY"
